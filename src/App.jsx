@@ -137,7 +137,7 @@ export default function App() {
   const feedstockNames = Object.keys(feedstocks);
   const gasNames = Object.keys(gasolines);
 
-  // Chart data: stacked feedstock allocation
+  // Chart data: stacked feedstock allocation (warm palette)
   const stackedChartData = [
     {
       name: 'Gas A',
@@ -183,21 +183,21 @@ export default function App() {
   const totalUsedFeedstock = totalAvailFeedstock - totalLeftover;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
-      {/* Top Navigation Bar */}
-      <header className="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-40 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/20">
+    <div className="min-h-screen bg-[#faf5ed] text-stone-900 flex flex-col font-sans">
+      {/* Top Navigation Bar in Orange & Cream */}
+      <header className="border-b border-[#e7dac9] bg-white/95 backdrop-blur sticky top-0 z-40 px-6 py-4 flex flex-wrap items-center justify-between gap-4 shadow-xs">
+        <div className="flex items-center space-x-3.5">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-orange-600 via-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/25">
             <Fuel className="w-6 h-6 text-white" />
           </div>
           <div>
             <div className="flex items-center space-x-2">
-              <h1 className="text-xl font-bold tracking-tight text-white">JANSEN GAS</h1>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">
+              <h1 className="text-xl font-extrabold tracking-tight text-stone-900">JANSEN GAS</h1>
+              <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800 border border-orange-200">
                 Case 4.1
               </span>
             </div>
-            <p className="text-xs text-slate-400">Aviation Gasoline Blending Optimization Engine</p>
+            <p className="text-xs text-stone-500 font-medium">Aviation Gasoline Blending Optimization Engine</p>
           </div>
         </div>
 
@@ -205,48 +205,48 @@ export default function App() {
         <div className="flex items-center space-x-2 overflow-x-auto py-1">
           <button
             onClick={() => applyPreset('baseline')}
-            className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition flex items-center gap-1.5"
+            className="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-[#fffdfa] hover:bg-orange-50 text-stone-700 border border-[#e7dac9] transition flex items-center gap-1.5 shadow-2xs"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3.5 h-3.5 text-orange-600" />
             Reset Baseline
           </button>
           <button
             onClick={() => applyPreset('q1_no_side')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition border flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition border flex items-center gap-1.5 shadow-2xs ${
               !sideConstraint
-                ? 'bg-amber-500/20 border-amber-500/50 text-amber-300'
-                : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'
+                ? 'bg-orange-600 border-orange-700 text-white shadow-sm'
+                : 'bg-white border-[#e7dac9] text-stone-700 hover:bg-orange-50 hover:text-orange-900'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             Q1: No A ≥ B (+$7k)
           </button>
           <button
             onClick={() => applyPreset('q2_med_tel')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition border flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition border flex items-center gap-1.5 shadow-2xs ${
               bTel === 'Medium'
-                ? 'bg-rose-500/20 border-rose-500/50 text-rose-300'
-                : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'
+                ? 'bg-rose-600 border-rose-700 text-white shadow-sm'
+                : 'bg-white border-[#e7dac9] text-stone-700 hover:bg-orange-50'
             }`}
           >
             Q2: Med TEL
           </button>
           <button
             onClick={() => applyPreset('q3_strict_rvp')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition border flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition border flex items-center gap-1.5 shadow-2xs ${
               rvpLimit === 6.6
-                ? 'bg-sky-500/20 border-sky-500/50 text-sky-300'
-                : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'
+                ? 'bg-orange-600 border-orange-700 text-white shadow-sm'
+                : 'bg-white border-[#e7dac9] text-stone-700 hover:bg-orange-50'
             }`}
           >
             Q3: RVP ≤ 6.6
           </button>
           <button
             onClick={() => applyPreset('q4_high_octane')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-lg transition border flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition border flex items-center gap-1.5 shadow-2xs ${
               aMinOct === 91.5
-                ? 'bg-purple-500/20 border-purple-500/50 text-purple-300'
-                : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700'
+                ? 'bg-orange-600 border-orange-700 text-white shadow-sm'
+                : 'bg-white border-[#e7dac9] text-stone-700 hover:bg-orange-50'
             }`}
           >
             Q4: Octane A 91.5
@@ -257,29 +257,33 @@ export default function App() {
       {/* Main Container */}
       <div className="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
         
-        {/* KPI Summary Cards */}
+        {/* KPI Summary Cards in Warm Cream & Orange */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
           {/* Card 1: Total Revenue */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 relative overflow-hidden shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs uppercase tracking-wider font-semibold">Total Net Revenue</span>
-              <DollarSign className="w-5 h-5 text-emerald-400" />
+          <div className="bg-white border border-[#e7dac9] rounded-2xl p-5 shadow-xs hover:shadow-md transition relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-amber-500"></div>
+            <div className="flex items-center justify-between text-stone-500 mb-2">
+              <span className="text-xs uppercase tracking-wider font-bold">Total Net Revenue</span>
+              <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+                <DollarSign className="w-4 h-4 text-orange-600" />
+              </div>
             </div>
             {solution.feasible ? (
               <>
-                <div className="text-3xl font-extrabold text-white">
+                <div className="text-3xl font-black text-stone-900 tracking-tight">
                   ${solution.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </div>
-                <div className="mt-2 flex items-center text-xs font-medium">
+                <div className="mt-2 flex items-center text-xs font-bold">
                   {Math.abs(revenueDelta) < 0.1 ? (
-                    <span className="text-slate-400">Matches Case Baseline</span>
+                    <span className="text-stone-400 font-medium">Matches Case Baseline</span>
                   ) : revenueDelta > 0 ? (
-                    <span className="text-emerald-400 flex items-center gap-1">
+                    <span className="text-emerald-700 flex items-center gap-1 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                       <TrendingUp className="w-3.5 h-3.5" />
                       +${revenueDelta.toLocaleString('en-US', { maximumFractionDigits: 2 })} vs baseline
                     </span>
                   ) : (
-                    <span className="text-rose-400 flex items-center gap-1">
+                    <span className="text-rose-700 flex items-center gap-1 bg-rose-50 px-2 py-0.5 rounded border border-rose-200">
                       <AlertTriangle className="w-3.5 h-3.5" />
                       -${Math.abs(revenueDelta).toLocaleString('en-US', { maximumFractionDigits: 2 })} vs baseline
                     </span>
@@ -287,66 +291,73 @@ export default function App() {
                 </div>
               </>
             ) : (
-              <div className="text-xl font-bold text-rose-400 flex items-center gap-2 mt-2">
-                <AlertTriangle className="w-6 h-6" />
+              <div className="text-lg font-bold text-rose-600 flex items-center gap-2 mt-2">
+                <AlertTriangle className="w-5 h-5" />
                 INFEASIBLE MODEL
               </div>
             )}
           </div>
 
           {/* Card 2: Gasoline Sales */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs uppercase tracking-wider font-semibold">Gasoline Sales (A, B, C)</span>
-              <Fuel className="w-5 h-5 text-sky-400" />
+          <div className="bg-white border border-[#e7dac9] rounded-2xl p-5 shadow-xs hover:shadow-md transition">
+            <div className="flex items-center justify-between text-stone-500 mb-2">
+              <span className="text-xs uppercase tracking-wider font-bold">Gasoline Sales (A, B, C)</span>
+              <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+                <Fuel className="w-4 h-4 text-orange-600" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-2xl font-black text-stone-900">
               ${solution.feasible ? solution.gasRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '$0.00'}
             </div>
-            <div className="text-xs text-slate-400 mt-2">
+            <div className="text-xs text-stone-500 mt-2 font-medium">
               {solution.feasible ? `${((solution.gasRevenue / solution.revenue) * 100).toFixed(1)}% of total revenue` : 'No fuel blended'}
             </div>
           </div>
 
           {/* Card 3: Feedstock Salvage */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs uppercase tracking-wider font-semibold">Leftover Feedstock Salvage</span>
-              <Layers className="w-5 h-5 text-indigo-400" />
+          <div className="bg-white border border-[#e7dac9] rounded-2xl p-5 shadow-xs hover:shadow-md transition">
+            <div className="flex items-center justify-between text-stone-500 mb-2">
+              <span className="text-xs uppercase tracking-wider font-bold">Residual Salvage</span>
+              <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                <Layers className="w-4 h-4 text-amber-700" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-2xl font-black text-stone-900">
               ${solution.feasible ? solution.leftoverRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '$0.00'}
             </div>
-            <div className="text-xs text-slate-400 mt-2">
-              {solution.feasible ? `${((solution.leftoverRevenue / solution.revenue) * 100).toFixed(1)}% from residual liquidation` : '0 gal sold'}
+            <div className="text-xs text-stone-500 mt-2 font-medium">
+              {solution.feasible ? `${((solution.leftoverRevenue / solution.revenue) * 100).toFixed(1)}% from unsold feedstock` : '0 gal sold'}
             </div>
           </div>
 
           {/* Card 4: Utilization */}
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-sm">
-            <div className="flex items-center justify-between text-slate-400 mb-2">
-              <span className="text-xs uppercase tracking-wider font-semibold">Refinery Utilization</span>
-              <TrendingUp className="w-5 h-5 text-amber-400" />
+          <div className="bg-white border border-[#e7dac9] rounded-2xl p-5 shadow-xs hover:shadow-md transition">
+            <div className="flex items-center justify-between text-stone-500 mb-2">
+              <span className="text-xs uppercase tracking-wider font-bold">Refinery Utilization</span>
+              <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center">
+                <TrendingUp className="w-4 h-4 text-orange-600" />
+              </div>
             </div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-2xl font-black text-stone-900">
               {solution.feasible ? `${((totalUsedFeedstock / totalAvailFeedstock) * 100).toFixed(1)}%` : '0.0%'}
             </div>
-            <div className="text-xs text-slate-400 mt-2">
+            <div className="text-xs text-stone-500 mt-2 font-medium">
               {solution.feasible ? `${totalUsedFeedstock.toFixed(1)}k / ${totalAvailFeedstock}k gallons converted` : 'Halted'}
             </div>
           </div>
+
         </div>
 
         {/* Infeasibility Alert Banner */}
         {!solution.feasible && (
-          <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 flex items-start space-x-3">
-            <ShieldAlert className="w-5 h-5 mt-0.5 text-rose-400 shrink-0" />
+          <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 flex items-start space-x-3 shadow-xs">
+            <ShieldAlert className="w-5 h-5 mt-0.5 text-rose-600 shrink-0" />
             <div>
-              <h4 className="font-semibold text-rose-200">Chemical or Volatility Infeasibility Detected</h4>
-              <p className="text-sm mt-1 text-rose-300/90">{solution.reason}</p>
+              <h4 className="font-bold text-rose-900">Chemical or Volatility Infeasibility Detected</h4>
+              <p className="text-sm mt-1 text-rose-700">{solution.reason}</p>
               <button
                 onClick={() => applyPreset('baseline')}
-                className="mt-3 px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold rounded-md transition"
+                className="mt-3 px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition shadow-xs"
               >
                 Restore Feasible Baseline
               </button>
@@ -359,23 +370,25 @@ export default function App() {
           
           {/* Left Column: Interactive Controls */}
           <div className="lg:col-span-1 space-y-5">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-5">
-              <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                <span className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Sliders className="w-4 h-4 text-sky-400" />
+            <div className="bg-white border border-[#e7dac9] rounded-2xl p-5 space-y-5 shadow-xs">
+              <div className="flex items-center justify-between border-b border-[#eee4d7] pb-3">
+                <span className="text-sm font-extrabold text-stone-900 flex items-center gap-2">
+                  <Sliders className="w-4 h-4 text-orange-600" />
                   Live Model Controls
                 </span>
-                <span className="text-xs text-slate-400">Interactive LP</span>
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded bg-orange-100 text-orange-800">
+                  Interactive
+                </span>
               </div>
 
               {/* Policy Constraint Switch */}
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 bg-[#faf5ed] p-3 rounded-xl border border-[#ede3d5]">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-medium text-slate-300">Policy: Gas A ≥ Gas B</label>
+                  <label className="text-xs font-bold text-stone-800">Policy: Gas A ≥ Gas B</label>
                   <button
                     onClick={() => setSideConstraint(!sideConstraint)}
                     className={`w-11 h-6 flex items-center rounded-full p-1 transition duration-300 ${
-                      sideConstraint ? 'bg-sky-600' : 'bg-slate-700'
+                      sideConstraint ? 'bg-orange-600' : 'bg-stone-300'
                     }`}
                   >
                     <div
@@ -385,31 +398,31 @@ export default function App() {
                     />
                   </button>
                 </div>
-                <p className="text-[11px] text-slate-500 leading-tight">
+                <p className="text-[11px] text-stone-500 leading-tight">
                   Enforces production of Gas A to be at least as large as Gas B.
                 </p>
               </div>
 
               {/* Gas B TEL Level */}
               <div className="space-y-1.5">
-                <label className="text-xs font-medium text-slate-300">Gas B TEL Lead Level</label>
+                <label className="text-xs font-bold text-stone-800">Gas B TEL Lead Level</label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => setBTel('High')}
-                    className={`py-1.5 text-xs font-medium rounded-lg border transition ${
+                    className={`py-1.5 text-xs font-bold rounded-lg border transition shadow-2xs ${
                       bTel === 'High'
-                        ? 'bg-sky-500/20 border-sky-500/60 text-sky-300'
-                        : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200'
+                        ? 'bg-orange-600 border-orange-700 text-white'
+                        : 'bg-[#faf5ed] border-[#e7dac9] text-stone-700 hover:bg-orange-50'
                     }`}
                   >
                     High TEL (Standard)
                   </button>
                   <button
                     onClick={() => setBTel('Medium')}
-                    className={`py-1.5 text-xs font-medium rounded-lg border transition ${
+                    className={`py-1.5 text-xs font-bold rounded-lg border transition shadow-2xs ${
                       bTel === 'Medium'
-                        ? 'bg-rose-500/20 border-rose-500/60 text-rose-300'
-                        : 'bg-slate-800 border-slate-700 text-slate-400 hover:text-slate-200'
+                        ? 'bg-rose-600 border-rose-700 text-white'
+                        : 'bg-[#faf5ed] border-[#e7dac9] text-stone-700 hover:bg-orange-50'
                     }`}
                   >
                     Medium TEL (Q2)
@@ -418,10 +431,10 @@ export default function App() {
               </div>
 
               {/* RVP Limit Slider */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-300">Max Reid Vapor Pressure</span>
-                  <span className="font-semibold text-sky-400">{rvpLimit.toFixed(2)} psi</span>
+              <div className="space-y-1.5 bg-[#faf5ed] p-3 rounded-xl border border-[#ede3d5]">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-stone-700">Max Reid Vapor Pressure</span>
+                  <span className="text-orange-600 font-mono">{rvpLimit.toFixed(2)} psi</span>
                 </div>
                 <input
                   type="range"
@@ -430,9 +443,9 @@ export default function App() {
                   step="0.05"
                   value={rvpLimit}
                   onChange={(e) => setRvpLimit(parseFloat(e.target.value))}
-                  className="w-full accent-sky-500 bg-slate-800 rounded-lg cursor-pointer h-2"
+                  className="w-full accent-orange-600 bg-orange-200 rounded-lg cursor-pointer h-2"
                 />
-                <div className="flex justify-between text-[10px] text-slate-500">
+                <div className="flex justify-between text-[10px] text-stone-500 font-medium">
                   <span>6.43 psi (Infeasible)</span>
                   <span>7.00 psi (Case)</span>
                   <span>7.50 psi</span>
@@ -440,10 +453,10 @@ export default function App() {
               </div>
 
               {/* Gas A Min Octane */}
-              <div className="space-y-1.5">
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-300">Gas A Minimum Octane</span>
-                  <span className="font-semibold text-purple-400">{aMinOct.toFixed(1)}</span>
+              <div className="space-y-1.5 bg-[#faf5ed] p-3 rounded-xl border border-[#ede3d5]">
+                <div className="flex justify-between text-xs font-bold">
+                  <span className="text-stone-700">Gas A Minimum Octane</span>
+                  <span className="text-orange-600 font-mono">{aMinOct.toFixed(1)}</span>
                 </div>
                 <input
                   type="range"
@@ -452,9 +465,9 @@ export default function App() {
                   step="0.1"
                   value={aMinOct}
                   onChange={(e) => setAMinOct(parseFloat(e.target.value))}
-                  className="w-full accent-purple-500 bg-slate-800 rounded-lg cursor-pointer h-2"
+                  className="w-full accent-orange-600 bg-orange-200 rounded-lg cursor-pointer h-2"
                 />
-                <div className="flex justify-between text-[10px] text-slate-500">
+                <div className="flex justify-between text-[10px] text-stone-500 font-medium">
                   <span>88.0</span>
                   <span>90.0 (Case)</span>
                   <span>91.8 (Max Feasible)</span>
@@ -462,12 +475,12 @@ export default function App() {
               </div>
 
               {/* Prices Section */}
-              <div className="pt-2 border-t border-slate-800 space-y-2">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Gasoline Selling Prices</span>
+              <div className="pt-2 border-t border-[#eee4d7] space-y-2">
+                <span className="text-xs font-extrabold text-stone-600 uppercase tracking-wider">Gasoline Selling Prices</span>
                 <div className="grid grid-cols-3 gap-2">
                   {gasNames.map(g => (
-                    <div key={g} className="bg-slate-800/60 p-2 rounded-lg border border-slate-800">
-                      <div className="text-[11px] text-slate-400">Gas {g} ($)</div>
+                    <div key={g} className="bg-[#faf5ed] p-2 rounded-lg border border-[#e7dac9]">
+                      <div className="text-[11px] font-bold text-stone-600">Gas {g} ($)</div>
                       <input
                         type="number"
                         step="0.10"
@@ -479,7 +492,7 @@ export default function App() {
                             [g]: { ...gasolines[g], price: val }
                           });
                         }}
-                        className="w-full bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-xs text-white mt-1 font-semibold"
+                        className="w-full bg-white border border-[#d6c5b3] rounded px-1.5 py-1 text-xs text-stone-900 mt-1 font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none"
                       />
                     </div>
                   ))}
@@ -487,12 +500,12 @@ export default function App() {
               </div>
 
               {/* Feedstock Supply Section */}
-              <div className="pt-2 border-t border-slate-800 space-y-2">
-                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Feedstock Available (1000s gal)</span>
+              <div className="pt-2 border-t border-[#eee4d7] space-y-2">
+                <span className="text-xs font-extrabold text-stone-600 uppercase tracking-wider">Feedstock Available (1000s gal)</span>
                 <div className="grid grid-cols-2 gap-2">
                   {feedstockNames.map(f => (
-                    <div key={f} className="bg-slate-800/60 p-2 rounded-lg border border-slate-800">
-                      <div className="text-[11px] text-slate-400 truncate">{f}</div>
+                    <div key={f} className="bg-[#faf5ed] p-2 rounded-lg border border-[#e7dac9]">
+                      <div className="text-[11px] font-bold text-stone-600 truncate">{f}</div>
                       <input
                         type="number"
                         step="5"
@@ -504,26 +517,27 @@ export default function App() {
                             [f]: { ...feedstocks[f], avail: val }
                           });
                         }}
-                        className="w-full bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-xs text-white mt-1 font-semibold"
+                        className="w-full bg-white border border-[#d6c5b3] rounded px-1.5 py-1 text-xs text-stone-900 mt-1 font-bold focus:ring-2 focus:ring-orange-500 focus:outline-none"
                       />
                     </div>
                   ))}
                 </div>
               </div>
+
             </div>
           </div>
 
-          {/* Right Column: Main Analysis Tabs */}
+          {/* Right Column: Main Content Tabs */}
           <div className="lg:col-span-3 space-y-6">
             
-            {/* Tab Navigation */}
-            <div className="flex border-b border-slate-800 space-x-2 overflow-x-auto">
+            {/* Tab Navigation in Orange & Cream */}
+            <div className="flex border-b border-[#e7dac9] space-x-2 overflow-x-auto pb-px">
               <button
                 onClick={() => setActiveTab('report')}
-                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
+                className={`pb-3 px-4 text-sm font-bold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
                   activeTab === 'report'
-                    ? 'border-sky-500 text-sky-400'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-900'
                 }`}
               >
                 <FileText className="w-4 h-4" />
@@ -531,10 +545,10 @@ export default function App() {
               </button>
               <button
                 onClick={() => setActiveTab('blending')}
-                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
+                className={`pb-3 px-4 text-sm font-bold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
                   activeTab === 'blending'
-                    ? 'border-sky-500 text-sky-400'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-900'
                 }`}
               >
                 <Layers className="w-4 h-4" />
@@ -542,10 +556,10 @@ export default function App() {
               </button>
               <button
                 onClick={() => setActiveTab('scenarios')}
-                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+                className={`pb-3 px-4 text-sm font-bold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
                   activeTab === 'scenarios'
-                    ? 'border-sky-500 text-sky-400'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-900'
                 }`}
               >
                 <Sparkles className="w-4 h-4" />
@@ -553,10 +567,10 @@ export default function App() {
               </button>
               <button
                 onClick={() => setActiveTab('valuation')}
-                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+                className={`pb-3 px-4 text-sm font-bold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
                   activeTab === 'valuation'
-                    ? 'border-sky-500 text-sky-400'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-900'
                 }`}
               >
                 <BarChart3 className="w-4 h-4" />
@@ -564,10 +578,10 @@ export default function App() {
               </button>
               <button
                 onClick={() => setActiveTab('model')}
-                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+                className={`pb-3 px-4 text-sm font-bold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
                   activeTab === 'model'
-                    ? 'border-sky-500 text-sky-400'
-                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-900'
                 }`}
               >
                 <FileCode2 className="w-4 h-4" />
@@ -578,149 +592,149 @@ export default function App() {
             {/* TAB 0: EXECUTIVE BUSINESS REPORT */}
             {activeTab === 'report' && (
               <div className="space-y-6">
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-7 space-y-6 shadow-xs">
                   {/* Memo Header */}
-                  <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-4">
+                  <div className="flex flex-wrap items-center justify-between border-b border-[#eee4d7] pb-4 gap-4">
                     <div>
-                      <span className="text-xs font-bold uppercase tracking-wider text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/20">
+                      <span className="text-xs font-bold uppercase tracking-wider text-orange-800 bg-orange-100 px-3 py-1 rounded-full border border-orange-200">
                         Formal Business Deliverable
                       </span>
-                      <h2 className="text-xl font-bold text-white mt-2">Executive Business Report & Decision Memo</h2>
-                      <p className="text-xs text-slate-400 mt-1">
+                      <h2 className="text-2xl font-black text-stone-900 mt-2">Executive Business Report & Decision Memo</h2>
+                      <p className="text-xs text-stone-500 mt-1 font-medium">
                         Case 4.1: Blending Aviation Gasoline at Jansen Gas &bull; Production Optimization Review
                       </p>
                     </div>
                     <button
                       onClick={() => window.print()}
-                      className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 text-xs font-semibold flex items-center gap-2 transition shadow-sm"
+                      className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg border border-orange-700 text-xs font-bold flex items-center gap-2 transition shadow-sm"
                     >
-                      <Printer className="w-4 h-4 text-sky-400" />
+                      <Printer className="w-4 h-4" />
                       Print / Save PDF
                     </button>
                   </div>
 
                   {/* Memorandum Metadata */}
-                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1 font-mono">
-                    <div><strong className="text-white font-sans">TO:</strong> Dave Wagner, Production Manager & Executive Leadership, Jansen Gas</div>
-                    <div><strong className="text-white font-sans">FROM:</strong> Gali Venkata Gopi</div>
-                    <div><strong className="text-white font-sans">DATE:</strong> October 2026</div>
-                    <div><strong className="text-white font-sans">SUBJECT:</strong> Optimal Feedstock Blending Strategy, Bottleneck Analysis, & Policy Evaluation</div>
+                  <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9] text-xs text-stone-700 space-y-1.5 font-mono">
+                    <div><strong className="text-stone-900 font-sans">TO:</strong> Dave Wagner, Production Manager & Executive Leadership, Jansen Gas</div>
+                    <div><strong className="text-stone-900 font-sans">FROM :--</strong> Gali Venkata Gopi</div>
+                    <div><strong className="text-stone-900 font-sans">DATE:</strong> October 2026</div>
+                    <div><strong className="text-stone-900 font-sans">SUBJECT:</strong> Optimal Feedstock Blending Strategy, Bottleneck Analysis, & Policy Evaluation</div>
                   </div>
 
                   {/* Executive Summary Callout */}
-                  <div className="p-4 rounded-xl bg-sky-950/40 border border-sky-500/30 text-sky-200 space-y-2">
-                    <h3 className="font-bold text-sky-300 text-sm flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-sky-400" />
+                  <div className="p-5 rounded-xl bg-gradient-to-r from-orange-50 via-[#fffaf2] to-amber-50 border-l-4 border-orange-500 text-stone-800 space-y-2 shadow-2xs">
+                    <h3 className="font-bold text-orange-900 text-sm flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-orange-600" />
                       Executive Summary & Optimal Financial Outcome
                     </h3>
-                    <p className="text-xs text-sky-200/90 leading-relaxed">
-                      Using Linear Programming optimization, Jansen Gas can achieve a maximized total revenue of <strong>${solution.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong> from finished gasoline sales and residual feedstock liquidations.
-                      All quality constraints (Reid vapor pressure &le; 7.0 psi, minimum Octane ratings) are strictly met. Alkylate is our primary binding bottleneck (100% utilized, shadow price of <strong>$5.77/gal</strong>).
+                    <p className="text-xs text-stone-700 leading-relaxed font-medium">
+                      Using Linear Programming optimization, Jansen Gas can achieve a maximized total revenue of <strong className="text-stone-900 font-bold">${solution.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong> from finished gasoline sales and residual feedstock liquidations.
+                      All quality constraints (Reid vapor pressure &le; 7.0 psi, minimum Octane ratings) are strictly met. Alkylate is our primary binding bottleneck (100% utilized, shadow price of <strong className="text-orange-700 font-bold">$5.77/gal</strong>).
                     </p>
                   </div>
 
                   {/* Revenue Breakdown Cards */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                      <span className="text-xs text-slate-400 uppercase font-semibold">Gasoline Sales</span>
-                      <div className="text-xl font-bold text-white mt-1 font-mono">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9]">
+                      <span className="text-xs text-stone-500 uppercase font-bold">Gasoline Sales</span>
+                      <div className="text-xl font-black text-stone-900 mt-1 font-mono">
                         ${solution.gasRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </div>
-                      <span className="text-[11px] text-emerald-400">85.3% of total revenue</span>
+                      <span className="text-[11px] text-emerald-700 font-bold">85.3% of total revenue</span>
                     </div>
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                      <span className="text-xs text-slate-400 uppercase font-semibold">Feedstock Salvage</span>
-                      <div className="text-xl font-bold text-white mt-1 font-mono">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9]">
+                      <span className="text-xs text-stone-500 uppercase font-bold">Feedstock Salvage</span>
+                      <div className="text-xl font-black text-stone-900 mt-1 font-mono">
                         ${solution.leftoverRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </div>
-                      <span className="text-[11px] text-indigo-400">14.7% from residual liquidation</span>
+                      <span className="text-[11px] text-amber-700 font-bold">14.7% from residual liquidation</span>
                     </div>
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
-                      <span className="text-xs text-slate-400 uppercase font-semibold">Total Revenue</span>
-                      <div className="text-xl font-bold text-sky-400 mt-1 font-mono">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9]">
+                      <span className="text-xs text-stone-500 uppercase font-bold">Total Revenue</span>
+                      <div className="text-xl font-black text-orange-600 mt-1 font-mono">
                         ${solution.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </div>
-                      <span className="text-[11px] text-slate-400">Maximized Objective</span>
+                      <span className="text-[11px] text-stone-500 font-medium">Maximized Objective</span>
                     </div>
                   </div>
 
                   {/* Strategic Case Questions Answers */}
                   <div className="space-y-4 pt-2">
-                    <h3 className="text-base font-bold text-white border-b border-slate-800 pb-2">
+                    <h3 className="text-base font-extrabold text-stone-900 border-b border-[#eee4d7] pb-2">
                       Strategic Case Questions & Findings (Dave Wagner Inquiries)
                     </h3>
 
                     {/* Q1 */}
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9] space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-orange-100 text-orange-800 border border-orange-200">
                           Question 1: Policy Constraint (Gas A &ge; Gas B)
                         </span>
-                        <span className="text-xs font-mono font-bold text-amber-400">+$6,988.41 Opportunity Cost</span>
+                        <span className="text-xs font-mono font-bold text-orange-700">+$6,988.41 Opportunity Cost</span>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-stone-700 leading-relaxed font-medium">
                         <strong>Finding:</strong> Enforcing the company policy that Gas A produced must be at least as large as Gas B costs the company <strong>$6,988.41</strong> in lost profit.
                         Removing this constraint allows production of higher-priced Gas B ($3.50/gal) to rise to <strong>194.69k gallons</strong>, increasing total revenue to <strong>$1,725,010.21</strong>.
                       </p>
                     </div>
 
                     {/* Q2 */}
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9] space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-rose-100 text-rose-800 border border-rose-200">
                           Question 2: Medium TEL for Gas B
                         </span>
-                        <span className="text-xs font-bold text-rose-400">Strictly Infeasible</span>
+                        <span className="text-xs font-bold text-rose-700">Strictly Infeasible</span>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-stone-700 leading-relaxed font-medium">
                         <strong>Finding:</strong> Producing Gas B with Medium TEL is <strong>chemically impossible</strong>. Achieving 97 octane requires large fractions of Alkylate and Isopentane; however, Isopentane's RVP of 20 exceeds the 7.0 psi limit, and Alkylate is simultaneously required by Gas C (100 octane). Jansen must keep Gas B on High TEL.
                       </p>
                     </div>
 
                     {/* Q3 */}
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9] space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-amber-100 text-amber-800 border border-amber-200">
                           Question 3: Tighter Reid Vapor Pressure Standards
                         </span>
-                        <span className="text-xs font-mono font-bold text-sky-400">Min Feasible RVP: 6.43 psi</span>
+                        <span className="text-xs font-mono font-bold text-amber-700">Min Feasible RVP: 6.43 psi</span>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-stone-700 leading-relaxed font-medium">
                         <strong>Finding:</strong> Stricter environmental standards can lower maximum RVP from 7.0 down to <strong>6.43 psi</strong> before blending becomes mathematically infeasible. Every 0.1 psi reduction costs approximately <strong>$10,000</strong> in lost revenue.
                       </p>
                     </div>
 
                     {/* Q4 */}
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9] space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-orange-100 text-orange-800 border border-orange-200">
                           Question 4: Gas A Octane Limits
                         </span>
-                        <span className="text-xs font-mono font-bold text-purple-400">Max Feasible Octane: 91.80</span>
+                        <span className="text-xs font-mono font-bold text-orange-700">Max Feasible Octane: 91.80</span>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-stone-700 leading-relaxed font-medium">
                         <strong>Finding:</strong> Dave Wagner's hypothesis that Gas A octane can be raised is feasible up to <strong>91.80</strong> octane. However, raising it diverts Alkylate from Gas C ($4.00/gal), decreasing revenue by $28,950 at 91.0 octane unless customers pay a premium.
                       </p>
                     </div>
 
                     {/* Q5 */}
-                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                    <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9] space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        <span className="text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-200">
                           Question 5: Market Inflation & Price Scale Invariance
                         </span>
-                        <span className="text-xs font-bold text-emerald-400">100% Invariant Recipe</span>
+                        <span className="text-xs font-bold text-emerald-700">100% Invariant Recipe</span>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-stone-700 leading-relaxed font-medium">
                         <strong>Finding:</strong> Dave is <strong>100% correct</strong>. Proportional (+10%) or uniform additive (+$1/gal) price/value changes do not alter the optimal physical blend recipe because relative property-to-margin tradeoffs remain constant.
                       </p>
                     </div>
                   </div>
 
                   {/* Recommendations */}
-                  <div className="border-t border-slate-800 pt-4 space-y-3">
-                    <h3 className="text-base font-bold text-white">Actionable Recommendations for Dave Wagner</h3>
-                    <ul className="text-xs text-slate-300 space-y-2 list-disc pl-5">
+                  <div className="border-t border-[#eee4d7] pt-4 space-y-3">
+                    <h3 className="text-base font-extrabold text-stone-900">Actionable Recommendations for Dave Wagner</h3>
+                    <ul className="text-xs text-stone-700 space-y-2 list-disc pl-5 font-medium leading-relaxed">
                       <li><strong>Remove Policy Constraint:</strong> Recommend executive approval to eliminate $Gas\ A \ge Gas\ B$, capturing <strong>+$6,988.41</strong> in immediate margin.</li>
                       <li><strong>Procure Extra Alkylate:</strong> Alkylate has an internal optimization worth of <strong>$5.77/gal</strong> (vs $4.50 book value). Acquire up to 50k additional gallons at any price under $5.50/gal.</li>
                       <li><strong>Maintain High TEL on Gas B:</strong> Reject Medium TEL suggestions from chemical staff due to severe infeasibility.</li>
@@ -735,42 +749,42 @@ export default function App() {
               <div className="space-y-6">
                 
                 {/* Table: Optimal Blending Matrix */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 overflow-hidden">
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-6 overflow-hidden shadow-xs">
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-base font-bold text-white">Optimal Blending Recipe Matrix (1,000s of Gallons)</h3>
-                    <span className="text-xs text-slate-400">Total Refinery Feedstock: {totalAvailFeedstock}k gal</span>
+                    <h3 className="text-base font-extrabold text-stone-900">Optimal Blending Recipe Matrix (1,000s of Gallons)</h3>
+                    <span className="text-xs text-stone-500 font-medium">Total Refinery Feedstock: {totalAvailFeedstock}k gal</span>
                   </div>
 
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs border-collapse">
                       <thead>
-                        <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider">
+                        <tr className="border-b border-[#e7dac9] bg-[#f7f0e6] text-stone-700 uppercase tracking-wider font-bold">
                           <th className="py-2.5 px-3">Feedstock</th>
                           <th className="py-2.5 px-3 text-right">Gas A (${gasolines.A.price.toFixed(2)})</th>
                           <th className="py-2.5 px-3 text-right">Gas B (${gasolines.B.price.toFixed(2)})</th>
                           <th className="py-2.5 px-3 text-right">Gas C (${gasolines.C.price.toFixed(2)})</th>
-                          <th className="py-2.5 px-3 text-right text-indigo-400">Leftover Sold</th>
+                          <th className="py-2.5 px-3 text-right text-orange-700 font-bold">Leftover Sold</th>
                           <th className="py-2.5 px-3 text-right">Total Avail</th>
                           <th className="py-2.5 px-3 text-right">Utilization</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-800/60 font-mono">
+                      <tbody className="divide-y divide-[#eee4d7] font-mono">
                         {feedstockNames.map(f => {
                           const usedInBlend = gasNames.reduce((acc, g) => acc + (solution.blend[`${f}_${g}`] || 0), 0);
                           const leftoverVal = solution.leftover[f] || 0;
                           const avail = feedstocks[f].avail;
                           const utilPercent = (usedInBlend / avail) * 100;
                           return (
-                            <tr key={f} className="hover:bg-slate-800/30 transition">
-                              <td className="py-2.5 px-3 font-sans font-semibold text-slate-200">{f}</td>
-                              <td className="py-2.5 px-3 text-right text-slate-300">{(solution.blend[`${f}_A`] || 0).toFixed(2)}</td>
-                              <td className="py-2.5 px-3 text-right text-slate-300">{(solution.blend[`${f}_B`] || 0).toFixed(2)}</td>
-                              <td className="py-2.5 px-3 text-right text-slate-300">{(solution.blend[`${f}_C`] || 0).toFixed(2)}</td>
-                              <td className="py-2.5 px-3 text-right text-indigo-300 font-bold">{leftoverVal.toFixed(2)}</td>
-                              <td className="py-2.5 px-3 text-right text-slate-400">{avail.toFixed(2)}</td>
+                            <tr key={f} className="hover:bg-orange-50/50 transition">
+                              <td className="py-2.5 px-3 font-sans font-bold text-stone-900">{f}</td>
+                              <td className="py-2.5 px-3 text-right text-stone-700">{(solution.blend[`${f}_A`] || 0).toFixed(2)}</td>
+                              <td className="py-2.5 px-3 text-right text-stone-700">{(solution.blend[`${f}_B`] || 0).toFixed(2)}</td>
+                              <td className="py-2.5 px-3 text-right text-stone-700">{(solution.blend[`${f}_C`] || 0).toFixed(2)}</td>
+                              <td className="py-2.5 px-3 text-right text-orange-700 font-bold">{leftoverVal.toFixed(2)}</td>
+                              <td className="py-2.5 px-3 text-right text-stone-500">{avail.toFixed(2)}</td>
                               <td className="py-2.5 px-3 text-right">
-                                <span className={`px-2 py-0.5 rounded text-[11px] font-sans font-semibold ${
-                                  utilPercent >= 99.9 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-800 text-slate-300'
+                                <span className={`px-2 py-0.5 rounded text-[11px] font-sans font-bold ${
+                                  utilPercent >= 99.9 ? 'bg-orange-100 text-orange-800 border border-orange-300' : 'bg-stone-100 text-stone-600'
                                 }`}>
                                   {utilPercent.toFixed(1)}%
                                 </span>
@@ -779,23 +793,23 @@ export default function App() {
                           );
                         })}
                         {/* Totals Row */}
-                        <tr className="border-t-2 border-slate-700 bg-slate-800/40 font-bold">
-                          <td className="py-3 px-3 font-sans text-white">Total Produced</td>
-                          <td className="py-3 px-3 text-right text-sky-400">{solution.production.A.toFixed(2)}</td>
-                          <td className="py-3 px-3 text-right text-sky-400">{solution.production.B.toFixed(2)}</td>
-                          <td className="py-3 px-3 text-right text-sky-400">{solution.production.C.toFixed(2)}</td>
-                          <td className="py-3 px-3 text-right text-indigo-400">{totalLeftover.toFixed(2)}</td>
-                          <td className="py-3 px-3 text-right text-white">{totalAvailFeedstock.toFixed(2)}</td>
-                          <td className="py-3 px-3 text-right text-emerald-400">{((totalUsedFeedstock/totalAvailFeedstock)*100).toFixed(1)}%</td>
+                        <tr className="border-t-2 border-orange-300 bg-[#fff8ee] font-bold">
+                          <td className="py-3 px-3 font-sans text-stone-900">Total Produced</td>
+                          <td className="py-3 px-3 text-right text-orange-600">{solution.production.A.toFixed(2)}</td>
+                          <td className="py-3 px-3 text-right text-orange-600">{solution.production.B.toFixed(2)}</td>
+                          <td className="py-3 px-3 text-right text-orange-600">{solution.production.C.toFixed(2)}</td>
+                          <td className="py-3 px-3 text-right text-amber-700">{totalLeftover.toFixed(2)}</td>
+                          <td className="py-3 px-3 text-right text-stone-900">{totalAvailFeedstock.toFixed(2)}</td>
+                          <td className="py-3 px-3 text-right text-orange-700">{((totalUsedFeedstock/totalAvailFeedstock)*100).toFixed(1)}%</td>
                         </tr>
                         {/* Minimum Required Row */}
-                        <tr className="text-slate-400 text-[11px]">
-                          <td className="py-2 px-3 font-sans">Min Contract Demand</td>
+                        <tr className="text-stone-500 text-[11px] bg-stone-50/50">
+                          <td className="py-2 px-3 font-sans font-medium">Min Contract Demand</td>
                           <td className="py-2 px-3 text-right">{gasolines.A.req.toFixed(2)}</td>
                           <td className="py-2 px-3 text-right">{gasolines.B.req.toFixed(2)}</td>
                           <td className="py-2 px-3 text-right">{gasolines.C.req.toFixed(2)}</td>
-                          <td colSpan={3} className="py-2 px-3 text-right italic font-sans text-slate-500">
-                            Gas C produced up to maximum feasible margin
+                          <td colSpan={3} className="py-2 px-3 text-right italic font-sans text-stone-500">
+                            Gas C produced up to maximum feasible profit
                           </td>
                         </tr>
                       </tbody>
@@ -812,25 +826,25 @@ export default function App() {
                     const maxRvp = rvpLimit;
 
                     return (
-                      <div key={g} className="bg-slate-900 border border-slate-800 rounded-2xl p-4 space-y-3">
-                        <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                          <span className="font-bold text-white text-sm">Gasoline {g} Quality</span>
-                          <span className="text-xs font-semibold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300">
+                      <div key={g} className="bg-white border border-[#e7dac9] rounded-2xl p-5 space-y-3 shadow-xs">
+                        <div className="flex items-center justify-between border-b border-[#eee4d7] pb-2">
+                          <span className="font-extrabold text-stone-900 text-sm">Gasoline {g} Quality</span>
+                          <span className="text-xs font-bold px-2 py-0.5 rounded bg-orange-100 text-orange-800">
                             ${gasolines[g].price.toFixed(2)} / gal
                           </span>
                         </div>
 
                         {/* RVP Bar */}
                         <div className="space-y-1">
-                          <div className="flex justify-between text-xs">
-                            <span className="text-slate-400">Reid Vapor Pressure:</span>
-                            <span className="font-mono font-semibold text-white">
+                          <div className="flex justify-between text-xs font-semibold">
+                            <span className="text-stone-500">Reid Vapor Pressure:</span>
+                            <span className="font-mono text-stone-900">
                               {rvpVal.toFixed(2)} / {maxRvp.toFixed(2)} psi
                             </span>
                           </div>
-                          <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                          <div className="w-full bg-stone-200 rounded-full h-2 overflow-hidden">
                             <div
-                              className="bg-sky-500 h-full rounded-full transition-all duration-500"
+                              className="bg-orange-600 h-full rounded-full transition-all duration-500"
                               style={{ width: `${Math.min(100, (rvpVal / maxRvp) * 100)}%` }}
                             />
                           </div>
@@ -838,15 +852,15 @@ export default function App() {
 
                         {/* Octane Bar */}
                         <div className="space-y-1">
-                          <div className="flex justify-between text-xs">
-                            <span className="text-slate-400">Octane Rating ({gasolines[g].tel} TEL):</span>
-                            <span className="font-mono font-semibold text-white">
+                          <div className="flex justify-between text-xs font-semibold">
+                            <span className="text-stone-500">Octane ({gasolines[g].tel} TEL):</span>
+                            <span className="font-mono text-stone-900">
                               {octVal.toFixed(2)} / min {minOct.toFixed(1)}
                             </span>
                           </div>
-                          <div className="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                          <div className="w-full bg-stone-200 rounded-full h-2 overflow-hidden">
                             <div
-                              className="bg-purple-500 h-full rounded-full transition-all duration-500"
+                              className="bg-amber-600 h-full rounded-full transition-all duration-500"
                               style={{ width: `${Math.min(100, (octVal / 110) * 100)}%` }}
                             />
                           </div>
@@ -856,24 +870,24 @@ export default function App() {
                   })}
                 </div>
 
-                {/* Stacked Chart */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-                  <h3 className="text-base font-bold text-white mb-4">Feedstock Allocation by Finished Product & Salvage</h3>
+                {/* Stacked Chart in Warm Orange + Cream Palette */}
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-6 shadow-xs">
+                  <h3 className="text-base font-extrabold text-stone-900 mb-4">Feedstock Allocation by Finished Product & Salvage</h3>
                   <div className="h-72 w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={stackedChartData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                        <XAxis dataKey="name" stroke="#94a3b8" />
-                        <YAxis stroke="#94a3b8" label={{ value: 'Gallons (1000s)', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f0e6d8" />
+                        <XAxis dataKey="name" stroke="#78716c" fontBold />
+                        <YAxis stroke="#78716c" label={{ value: 'Gallons (1000s)', angle: -90, position: 'insideLeft', fill: '#78716c' }} />
                         <Tooltip
-                          contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
+                          contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e7dac9', borderRadius: '8px', color: '#1c1917' }}
                           formatter={(val) => [`${val.toFixed(2)}k gal`]}
                         />
                         <Legend wrapperStyle={{ paddingTop: '10px' }} />
-                        <Bar dataKey="Alkylate" stackId="a" fill="#0284c7" />
-                        <Bar dataKey="CCG" stackId="a" fill="#f59e0b" />
-                        <Bar dataKey="SRG" stackId="a" fill="#10b981" />
-                        <Bar dataKey="Isopentane" stackId="a" fill="#ec4899" />
+                        <Bar dataKey="Alkylate" stackId="a" fill="#ea580c" />
+                        <Bar dataKey="CCG" stackId="a" fill="#d97706" />
+                        <Bar dataKey="SRG" stackId="a" fill="#c2410c" />
+                        <Bar dataKey="Isopentane" stackId="a" fill="#fb923c" />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -887,136 +901,136 @@ export default function App() {
               <div className="space-y-4">
                 
                 {/* Scenario 1 */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-6 space-y-3 shadow-xs">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-orange-100 text-orange-800 border border-orange-200">
                         Question 1
                       </span>
-                      <h4 className="font-bold text-white text-base">Cost of the Side Constraint (Gas A ≥ Gas B)</h4>
+                      <h4 className="font-extrabold text-stone-900 text-base">Cost of the Side Constraint (Gas A ≥ Gas B)</h4>
                     </div>
                     <button
                       onClick={() => applyPreset('q1_no_side')}
-                      className="px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-semibold rounded-lg border border-amber-500/40 transition"
+                      className="px-3.5 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold rounded-lg transition shadow-xs"
                     >
                       Run Scenario 1
                     </button>
                   </div>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm text-stone-700 font-medium">
                     Dave is not sure whether the policy requirement of producing at least as much Gas A as Gas B is necessary. What is this constraint costing Jansen Gas?
                   </p>
-                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
+                  <div className="bg-[#faf5ed] p-4 rounded-xl border border-[#e7dac9] space-y-2 text-xs font-medium">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Baseline Revenue (With Side Constraint):</span>
-                      <span className="font-mono font-semibold text-white">$1,718,021.80</span>
+                      <span className="text-stone-500">Baseline Revenue (With Side Constraint):</span>
+                      <span className="font-mono font-bold text-stone-900">$1,718,021.80</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Revenue Without Side Constraint:</span>
-                      <span className="font-mono font-semibold text-emerald-400">$1,725,010.21</span>
+                      <span className="text-stone-500">Revenue Without Side Constraint:</span>
+                      <span className="font-mono font-bold text-emerald-700">$1,725,010.21</span>
                     </div>
-                    <div className="flex justify-between border-t border-slate-800 pt-2 font-bold">
-                      <span className="text-amber-400">Net Opportunity Cost of Policy:</span>
-                      <span className="font-mono text-amber-400">+$6,988.41</span>
+                    <div className="flex justify-between border-t border-[#e7dac9] pt-2 font-bold">
+                      <span className="text-orange-700">Net Opportunity Cost of Policy:</span>
+                      <span className="font-mono text-orange-700 text-sm">+$6,988.41</span>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-400 italic">
+                  <p className="text-xs text-stone-500 italic">
                     Strategic Insight: The constraint forces the refinery to blend 10k additional gallons of \$3.00 Gas A instead of high-margin Gas B (\$3.50/gal).
                   </p>
                 </div>
 
                 {/* Scenario 2 */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-6 space-y-3 shadow-xs">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200">
                         Question 2
                       </span>
-                      <h4 className="font-bold text-white text-base">Medium TEL Level for Gas B</h4>
+                      <h4 className="font-extrabold text-stone-900 text-base">Medium TEL Level for Gas B</h4>
                     </div>
                     <button
                       onClick={() => applyPreset('q2_med_tel')}
-                      className="px-3 py-1 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 text-xs font-semibold rounded-lg border border-rose-500/40 transition"
+                      className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold rounded-lg transition shadow-xs"
                     >
                       Test Medium TEL
                     </button>
                   </div>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm text-stone-700 font-medium">
                     Chemical experts suggested producing Gas B with a "Medium" TEL level (octane ratings halfway between Low and High). Would this be a better option?
                   </p>
-                  <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-300 space-y-1">
-                    <span className="font-bold text-rose-200">Finding: Mathematically INFEASIBLE</span>
-                    <p className="text-slate-400">
+                  <div className="p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-xs text-rose-800 space-y-1">
+                    <span className="font-bold text-rose-900">Finding: Mathematically INFEASIBLE</span>
+                    <p className="text-stone-600 font-medium">
                       Reaching Octane 97 under Medium TEL requires vast quantities of Alkylate and Isopentane. However, Isopentane has an RVP of 20 (limit is 7.0), and Alkylate is simultaneously required by Gas C (min octane 100).
                     </p>
                   </div>
                 </div>
 
                 {/* Scenario 3 */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-6 space-y-3 shadow-xs">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-200">
                         Question 3
                       </span>
-                      <h4 className="font-bold text-white text-base">Tighter Reid Vapor Pressure Standards</h4>
+                      <h4 className="font-extrabold text-stone-900 text-base">Tighter Reid Vapor Pressure Standards</h4>
                     </div>
                     <button
                       onClick={() => applyPreset('q3_strict_rvp')}
-                      className="px-3 py-1 bg-sky-500/20 hover:bg-sky-500/30 text-sky-300 text-xs font-semibold rounded-lg border border-sky-500/40 transition"
+                      className="px-3.5 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg transition shadow-xs"
                     >
                       Set RVP = 6.6
                     </button>
                   </div>
-                  <p className="text-sm text-slate-300">
+                  <p className="text-sm text-stone-700 font-medium">
                     If environmental air pollution regulations lower the maximum Reid vapor pressure across all gas types, how does it affect revenue?
                   </p>
                   <div className="grid grid-cols-2 gap-3 text-xs">
-                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                      <span className="text-slate-400 block">Critical Feasibility Threshold</span>
-                      <span className="text-lg font-bold text-white font-mono">6.43 psi</span>
-                      <span className="text-[11px] text-slate-500 block mt-1">Below this, no blend is viable</span>
+                    <div className="bg-[#faf5ed] p-3.5 rounded-xl border border-[#e7dac9]">
+                      <span className="text-stone-500 block font-bold">Critical Feasibility Threshold</span>
+                      <span className="text-lg font-black text-stone-900 font-mono">6.43 psi</span>
+                      <span className="text-[11px] text-stone-500 block mt-1">Below this, no blend is viable</span>
                     </div>
-                    <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-                      <span className="text-slate-400 block">Marginal Cost of Compliance</span>
-                      <span className="text-lg font-bold text-rose-400 font-mono">-$10,000</span>
-                      <span className="text-[11px] text-slate-500 block mt-1">Revenue lost per 0.1 psi reduction</span>
+                    <div className="bg-[#faf5ed] p-3.5 rounded-xl border border-[#e7dac9]">
+                      <span className="text-stone-500 block font-bold">Marginal Cost of Compliance</span>
+                      <span className="text-lg font-black text-rose-700 font-mono">-$10,000</span>
+                      <span className="text-[11px] text-stone-500 block mt-1">Revenue lost per 0.1 psi reduction</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Scenario 4 & 5 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+                  <div className="bg-white border border-[#e7dac9] rounded-2xl p-5 space-y-3 shadow-xs">
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-orange-100 text-orange-800 border border-orange-200">
                         Question 4
                       </span>
-                      <h4 className="font-bold text-white text-sm">Gas A Octane Frontier</h4>
+                      <h4 className="font-bold text-stone-900 text-sm">Gas A Octane Frontier</h4>
                     </div>
-                    <p className="text-xs text-slate-300">
+                    <p className="text-xs text-stone-600 font-medium">
                       How far can Gas A minimum octane be raised above 90.0 before losing feasibility?
                     </p>
-                    <div className="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800">
-                      <span className="text-purple-400 font-bold text-base">91.80 Max Octane</span>
-                      <p className="text-slate-500 text-[11px] mt-1 font-sans">
+                    <div className="text-xs font-mono bg-[#faf5ed] p-3 rounded-xl border border-[#e7dac9]">
+                      <span className="text-orange-700 font-black text-base">91.80 Max Octane</span>
+                      <p className="text-stone-500 text-[11px] mt-1 font-sans">
                         Costs -$29k at 91.0 octane as Alkylate is diverted from high-priced Gas C.
                       </p>
                     </div>
                   </div>
 
-                  <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-3">
+                  <div className="bg-white border border-[#e7dac9] rounded-2xl p-5 space-y-3 shadow-xs">
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      <span className="text-xs font-bold px-2.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
                         Question 5
                       </span>
-                      <h4 className="font-bold text-white text-sm">Price Scaling Invariance</h4>
+                      <h4 className="font-bold text-stone-900 text-sm">Price Scaling Invariance</h4>
                     </div>
-                    <p className="text-xs text-slate-300">
+                    <p className="text-xs text-stone-600 font-medium">
                       Do uniform percentage or additive price and feedstock shifts change the optimal blend?
                     </p>
-                    <div className="text-xs font-mono bg-slate-950 p-3 rounded-xl border border-slate-800">
-                      <span className="text-emerald-400 font-bold text-base">100% Invariant Recipe</span>
-                      <p className="text-slate-500 text-[11px] mt-1 font-sans">
+                    <div className="text-xs font-mono bg-[#faf5ed] p-3 rounded-xl border border-[#e7dac9]">
+                      <span className="text-emerald-700 font-black text-base">100% Invariant Recipe</span>
+                      <p className="text-stone-500 text-[11px] mt-1 font-sans">
                         Dave is 100% correct. Decision variables depend exclusively on relative margins.
                       </p>
                     </div>
@@ -1029,25 +1043,25 @@ export default function App() {
             {/* TAB 3: DUAL / SHADOW PRICES */}
             {activeTab === 'valuation' && (
               <div className="space-y-6">
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-                  <h3 className="text-base font-bold text-white mb-2">Feedstock Marginal Worth (Dual / Shadow Price Analysis)</h3>
-                  <p className="text-xs text-slate-400 mb-4">
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-6 shadow-xs">
+                  <h3 className="text-base font-extrabold text-stone-900 mb-2">Feedstock Marginal Worth (Dual / Shadow Price Analysis)</h3>
+                  <p className="text-xs text-stone-500 mb-4 font-medium">
                     The shadow price indicates the maximum price Jansen Gas should be willing to pay for one additional gallon of raw feedstock.
                   </p>
 
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-xs border-collapse font-mono">
                       <thead>
-                        <tr className="border-b border-slate-800 text-slate-400 uppercase tracking-wider font-sans">
+                        <tr className="border-b border-[#e7dac9] bg-[#f7f0e6] text-stone-700 uppercase tracking-wider font-sans font-bold">
                           <th className="py-2.5 px-3">Feedstock</th>
                           <th className="py-2.5 px-3 text-right">Available</th>
                           <th className="py-2.5 px-3 text-right">Book Value ($)</th>
-                          <th className="py-2.5 px-3 text-right text-emerald-400">Shadow Price ($)</th>
+                          <th className="py-2.5 px-3 text-right text-orange-700">Shadow Price ($)</th>
                           <th className="py-2.5 px-3 text-right">Marginal Profit Premium</th>
                           <th className="py-2.5 px-3">Status</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-800/60">
+                      <tbody className="divide-y divide-[#eee4d7]">
                         {feedstockNames.map(f => {
                           const book = feedstocks[f].value;
                           const shadow = solution.shadowPrices ? +(solution.shadowPrices[f] || 0) : book;
@@ -1055,25 +1069,25 @@ export default function App() {
                           const isBinding = (solution.leftover[f] || 0) <= 0.05;
 
                           return (
-                            <tr key={f} className="hover:bg-slate-800/30 transition">
-                              <td className="py-3 px-3 font-sans font-semibold text-slate-200">{f}</td>
-                              <td className="py-3 px-3 text-right text-slate-300">{feedstocks[f].avail}k gal</td>
-                              <td className="py-3 px-3 text-right text-slate-400">${book.toFixed(2)}</td>
-                              <td className="py-3 px-3 text-right text-emerald-400 font-bold">${shadow.toFixed(2)}</td>
+                            <tr key={f} className="hover:bg-orange-50/50 transition">
+                              <td className="py-3 px-3 font-sans font-bold text-stone-900">{f}</td>
+                              <td className="py-3 px-3 text-right text-stone-700">{feedstocks[f].avail}k gal</td>
+                              <td className="py-3 px-3 text-right text-stone-500">${book.toFixed(2)}</td>
+                              <td className="py-3 px-3 text-right text-orange-700 font-bold">${shadow.toFixed(2)}</td>
                               <td className="py-3 px-3 text-right">
                                 {premium > 0.01 ? (
-                                  <span className="text-emerald-400 font-bold">+${premium.toFixed(2)} / gal</span>
+                                  <span className="text-emerald-700 font-bold">+${premium.toFixed(2)} / gal</span>
                                 ) : (
-                                  <span className="text-slate-500">$0.00</span>
+                                  <span className="text-stone-400">$0.00</span>
                                 )}
                               </td>
                               <td className="py-3 px-3 font-sans">
                                 {isBinding ? (
-                                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                  <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-orange-100 text-orange-800 border border-orange-300">
                                     Bottleneck (100% Used)
                                   </span>
                                 ) : (
-                                  <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-800 text-slate-400">
+                                  <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-stone-100 text-stone-600">
                                     Surplus ({(solution.leftover[f] || 0).toFixed(1)}k gal unsold)
                                   </span>
                                 )}
@@ -1087,21 +1101,21 @@ export default function App() {
                 </div>
 
                 {/* Valuation Bar Chart */}
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-5">
-                  <h3 className="text-base font-bold text-white mb-4">Feedstock Market Value vs Internal Optimization Shadow Price</h3>
+                <div className="bg-white border border-[#e7dac9] rounded-2xl p-6 shadow-xs">
+                  <h3 className="text-base font-extrabold text-stone-900 mb-4">Feedstock Market Value vs Internal Optimization Shadow Price</h3>
                   <div className="h-64 w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={valuationChartData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                        <XAxis dataKey="name" stroke="#94a3b8" />
-                        <YAxis stroke="#94a3b8" label={{ value: '$ per Gallon', angle: -90, position: 'insideLeft', fill: '#94a3b8' }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f0e6d8" />
+                        <XAxis dataKey="name" stroke="#78716c" fontBold />
+                        <YAxis stroke="#78716c" label={{ value: '$ per Gallon', angle: -90, position: 'insideLeft', fill: '#78716c' }} />
                         <Tooltip
-                          contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px' }}
+                          contentStyle={{ backgroundColor: '#ffffff', borderColor: '#e7dac9', borderRadius: '8px', color: '#1c1917' }}
                           formatter={(val) => [`$${val.toFixed(2)} / gal`]}
                         />
                         <Legend wrapperStyle={{ paddingTop: '10px' }} />
-                        <Bar dataKey="bookValue" name="Feedstock Salvage Value ($)" fill="#64748b" />
-                        <Bar dataKey="shadowPrice" name="Internal Shadow Price ($)" fill="#10b981" />
+                        <Bar dataKey="bookValue" name="Feedstock Salvage Value ($)" fill="#a8a29e" />
+                        <Bar dataKey="shadowPrice" name="Internal Shadow Price ($)" fill="#ea580c" />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -1111,40 +1125,40 @@ export default function App() {
 
             {/* TAB 4: MATHEMATICAL MODEL DEFINITION */}
             {activeTab === 'model' && (
-              <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-5 text-sm">
+              <div className="bg-white border border-[#e7dac9] rounded-2xl p-7 space-y-5 text-sm shadow-xs">
                 <div>
-                  <h3 className="text-base font-bold text-white mb-2">Linear Programming Model Formulation</h3>
-                  <p className="text-xs text-slate-400">
+                  <h3 className="text-base font-extrabold text-stone-900 mb-2">Linear Programming Model Formulation</h3>
+                  <p className="text-xs text-stone-500 font-medium">
                     Standard mathematical model for refinery blending optimization with residual salvage disposal.
                   </p>
                 </div>
 
-                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3 font-mono text-xs">
+                <div className="bg-[#faf5ed] p-5 rounded-xl border border-[#e7dac9] space-y-3 font-mono text-xs">
                   <div>
-                    <span className="text-sky-400 font-bold block mb-1 font-sans">Objective Function (Maximize Total Revenue):</span>
-                    <span className="text-slate-300">
+                    <span className="text-orange-700 font-bold block mb-1 font-sans">Objective Function (Maximize Total Revenue):</span>
+                    <span className="text-stone-800">
                       max Z = &sum;<sub>j &isin; &#123;A,B,C&#125;</sub> p<sub>j</sub> (&sum;<sub>i</sub> x<sub>ij</sub>) + &sum;<sub>i</sub> v<sub>i</sub> s<sub>i</sub>
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-sky-400 font-bold block mb-1 font-sans">1. Feedstock Material Balance:</span>
-                    <span className="text-slate-300">&sum;<sub>j</sub> x<sub>ij</sub> + s<sub>i</sub> = Supply<sub>i</sub>, &forall; i &isin; Feedstocks</span>
+                    <span className="text-orange-700 font-bold block mb-1 font-sans">1. Feedstock Material Balance:</span>
+                    <span className="text-stone-800">&sum;<sub>j</sub> x<sub>ij</sub> + s<sub>i</sub> = Supply<sub>i</sub>, &forall; i &isin; Feedstocks</span>
                   </div>
 
                   <div>
-                    <span className="text-sky-400 font-bold block mb-1 font-sans">2. Minimum Demand Targets:</span>
-                    <span className="text-slate-300">&sum;<sub>i</sub> x<sub>ij</sub> &ge; Demand<sub>j</sub>, &forall; j &isin; &#123;A, B, C&#125;</span>
+                    <span className="text-orange-700 font-bold block mb-1 font-sans">2. Minimum Demand Targets:</span>
+                    <span className="text-stone-800">&sum;<sub>i</sub> x<sub>ij</sub> &ge; Demand<sub>j</sub>, &forall; j &isin; &#123;A, B, C&#125;</span>
                   </div>
 
                   <div>
-                    <span className="text-sky-400 font-bold block mb-1 font-sans">3. Reid Vapor Pressure (RVP &le; 7.0 psi):</span>
-                    <span className="text-slate-300">&sum;<sub>i</sub> (RVP<sub>i</sub> - 7.0) x<sub>ij</sub> &le; 0, &forall; j &isin; &#123;A, B, C&#125;</span>
+                    <span className="text-orange-700 font-bold block mb-1 font-sans">3. Reid Vapor Pressure (RVP &le; 7.0 psi):</span>
+                    <span className="text-stone-800">&sum;<sub>i</sub> (RVP<sub>i</sub> - 7.0) x<sub>ij</sub> &le; 0, &forall; j &isin; &#123;A, B, C&#125;</span>
                   </div>
 
                   <div>
-                    <span className="text-sky-400 font-bold block mb-1 font-sans">4. Octane Requirements (Low TEL for A, High for B & C):</span>
-                    <span className="text-slate-300">
+                    <span className="text-orange-700 font-bold block mb-1 font-sans">4. Octane Requirements (Low TEL for A, High for B & C):</span>
+                    <span className="text-stone-800">
                       &sum;<sub>i</sub> (OctaneLow<sub>i</sub> - 90) x<sub>iA</sub> &ge; 0<br />
                       &sum;<sub>i</sub> (OctaneHigh<sub>i</sub> - 97) x<sub>iB</sub> &ge; 0<br />
                       &sum;<sub>i</sub> (OctaneHigh<sub>i</sub> - 100) x<sub>iC</sub> &ge; 0
@@ -1152,16 +1166,16 @@ export default function App() {
                   </div>
 
                   <div>
-                    <span className="text-sky-400 font-bold block mb-1 font-sans">5. Production Policy:</span>
-                    <span className="text-slate-300">&sum;<sub>i</sub> x<sub>iA</sub> &ge; &sum;<sub>i</sub> x<sub>iB</sub> (Gas A &ge; Gas B)</span>
+                    <span className="text-orange-700 font-bold block mb-1 font-sans">5. Production Policy:</span>
+                    <span className="text-stone-800">&sum;<sub>i</sub> x<sub>iA</sub> &ge; &sum;<sub>i</sub> x<sub>iB</sub> (Gas A &ge; Gas B)</span>
                   </div>
                 </div>
 
-                <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                <div className="pt-3 border-t border-[#eee4d7] flex items-center justify-between text-xs text-stone-500">
                   <span>Engine: Pure Client-Side Simplex LP Solver (Zero Vercel cold-start latency)</span>
-                  <span className="text-emerald-400 font-semibold flex items-center gap-1">
-                    <CheckCircle2 className="w-4 h-4" />
-                    Verified against PuLP CBC
+                  <span className="text-orange-700 font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-4 h-4 text-orange-600" />
+                    Verified against PuLP CBC ($1,718,021.80)
                   </span>
                 </div>
               </div>
@@ -1172,9 +1186,9 @@ export default function App() {
 
       </div>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 bg-slate-900 py-4 px-6 text-center text-xs text-slate-500 mt-auto">
-        Jansen Gas Aviation Gasoline Blending Decision Support System &bull; Designed for Vercel Deployment &bull; 2026 Antigravity
+      {/* Footer in Warm Cream */}
+      <footer className="border-t border-[#e7dac9] bg-white py-4 px-6 text-center text-xs text-stone-500 mt-auto">
+        Jansen Gas Aviation Gasoline Blending Decision Support System &bull; Designed by Gali Venkata Gopi &bull; 2026
       </footer>
     </div>
   );

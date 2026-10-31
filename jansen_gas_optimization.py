@@ -515,16 +515,16 @@ def main():
   <title>Jansen Gas | Executive Business Report & Optimization Model</title>
   <style>
     :root {{
-      --primary: #0284c7;
-      --primary-dark: #0369a1;
-      --bg: #0b1120;
-      --card-bg: #111827;
-      --card-border: #1f2937;
-      --text: #f3f4f6;
-      --text-muted: #9ca3af;
-      --success: #10b981;
-      --danger: #ef4444;
-      --warning: #f59e0b;
+      --primary: #ea580c;
+      --primary-dark: #c2410c;
+      --bg: #faf5ed;
+      --card-bg: #ffffff;
+      --card-border: #e7dac9;
+      --text: #1c1917;
+      --text-muted: #78716c;
+      --success: #15803d;
+      --danger: #b91c1c;
+      --warning: #b45309;
     }}
     * {{ box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }}
     body {{ background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 30px 20px; }}
@@ -533,51 +533,61 @@ def main():
     /* Header */
     .header {{ display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 25px; }}
     .logo-group {{ display: flex; align-items: center; gap: 15px; }}
-    .logo-badge {{ width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #0284c7, #4f46e5); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: white; }}
-    .title-group h1 {{ font-size: 24px; color: white; font-weight: 800; }}
-    .title-group p {{ font-size: 13px; color: var(--text-muted); }}
-    .btn-print {{ background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; transition: 0.2s; }}
+    .logo-badge {{ width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #ea580c, #d97706); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: white; box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25); }}
+    .title-group h1 {{ font-size: 24px; color: #1c1917; font-weight: 800; }}
+    .title-group p {{ font-size: 13px; color: var(--text-muted); font-weight: 500; }}
+    .btn-print {{ background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px; transition: 0.2s; box-shadow: 0 2px 5px rgba(234, 88, 12, 0.2); }}
     .btn-print:hover {{ background: var(--primary-dark); }}
 
     /* Navigation Tabs */
     .tabs {{ display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }}
-    .tab-btn {{ background: none; border: none; color: var(--text-muted); padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: 0.2s; }}
-    .tab-btn.active {{ background: #1e293b; color: #38bdf8; }}
-    .tab-btn:hover:not(.active) {{ color: white; }}
+    .tab-btn {{ background: none; border: none; color: var(--text-muted); padding: 8px 16px; font-size: 14px; font-weight: 700; cursor: pointer; border-radius: 8px; transition: 0.2s; }}
+    .tab-btn.active {{ background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }}
+    .tab-btn:hover:not(.active) {{ color: #1c1917; background: #f5ebe0; }}
 
     /* KPI Grid */
     .kpi-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 30px; }}
-    .kpi-card {{ background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px; }}
-    .kpi-label {{ font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }}
-    .kpi-value {{ font-size: 28px; font-weight: 800; color: white; font-family: monospace; }}
-    .kpi-sub {{ font-size: 12px; color: var(--success); margin-top: 6px; font-weight: 500; }}
+    .kpi-card {{ background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }}
+    .kpi-label {{ font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px; }}
+    .kpi-value {{ font-size: 28px; font-weight: 900; color: #1c1917; font-family: monospace; }}
+    .kpi-sub {{ font-size: 12px; color: var(--primary); margin-top: 6px; font-weight: 600; }}
 
     /* Section Cards */
-    .card {{ background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 25px; margin-bottom: 25px; }}
-    .card h2 {{ font-size: 18px; font-weight: 700; color: white; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }}
-    .card h3 {{ font-size: 15px; font-weight: 600; color: #38bdf8; margin: 15px 0 8px; }}
-    p {{ color: #d1d5db; font-size: 14px; margin-bottom: 12px; }}
+    .card {{ background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 25px; margin-bottom: 25px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }}
+    .card h2 {{ font-size: 18px; font-weight: 800; color: #1c1917; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }}
+    .card h3 {{ font-size: 15px; font-weight: 700; color: #ea580c; margin: 15px 0 8px; }}
+    p {{ color: #44403c; font-size: 14px; margin-bottom: 12px; font-weight: 450; }}
 
     /* Tables */
     table {{ width: 100%; border-collapse: collapse; font-size: 13px; margin: 15px 0; }}
-    th, td {{ padding: 12px 14px; text-align: left; border-bottom: 1px solid #1f2937; }}
-    th {{ background: #1a2234; color: #94a3b8; text-transform: uppercase; font-size: 11px; font-weight: 700; }}
-    tr:hover {{ background: rgba(255, 255, 255, 0.02); }}
+    th, td {{ padding: 12px 14px; text-align: left; border-bottom: 1px solid #e7dac9; }}
+    th {{ background: #f7f0e6; color: #44403c; text-transform: uppercase; font-size: 11px; font-weight: 800; }}
+    tr:hover {{ background: rgba(234, 88, 12, 0.03); }}
     .text-right {{ text-align: right; }}
     .font-mono {{ font-family: monospace; }}
     .badge {{ display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }}
-    .badge-success {{ background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }}
-    .badge-warning {{ background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }}
-    .badge-danger {{ background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }}
+    .badge-success {{ background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }}
+    .badge-warning {{ background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }}
+    .badge-danger {{ background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }}
 
     /* Math Box */
-    .math-box {{ background: #070d17; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; font-family: monospace; font-size: 13px; color: #e2e8f0; margin: 15px 0; }}
+    .math-box {{ background: #faf5ed; border: 1px solid #e7dac9; border-radius: 10px; padding: 16px; font-family: monospace; font-size: 13px; color: #1c1917; margin: 15px 0; }}
     .math-line {{ margin-bottom: 8px; }}
-    .math-title {{ color: #38bdf8; font-weight: bold; margin-bottom: 4px; }}
+    .math-title {{ color: #ea580c; font-weight: bold; margin-bottom: 4px; }}
 
     /* Charts */
     .chart-container {{ text-align: center; margin: 20px 0; }}
-    .chart-container img {{ max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--card-border); }}
+    .chart-container img {{ max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--card-border); box-shadow: 0 2px 8px rgba(0,0,0,0.06); }}
+
+    /* Grid layout */
+    .grid-2 {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }}
+    @media (max-width: 768px) {{ .grid-2 {{ grid-template-columns: 1fr; }} }}
+
+    /* Callout */
+    .callout {{ border-left: 4px solid var(--primary); background: #fff8ee; padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 15px 0; border-top: 1px solid #fde68a; border-right: 1px solid #fde68a; border-bottom: 1px solid #fde68a; }}
+    .callout-title {{ font-weight: 800; color: #c2410c; font-size: 13px; text-transform: uppercase; margin-bottom: 4px; }}
+    .callout-body {{ font-size: 13px; color: #44403c; font-weight: 500; }}
+  </style>
 
     /* Grid layout */
     .grid-2 {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }}
