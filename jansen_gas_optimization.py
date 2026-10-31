@@ -2,7 +2,7 @@
 Jansen Gas Aviation Gasoline Blending Optimization Model
 =========================================================
 Case 4.1: Blending Aviation Gasoline at Jansen Gas
-Author: Antigravity Data Science & Business Analytics Team
+Author: Gali Venkata Gopi
 Date: October 2026
 
 This script implements an end-to-end Linear Programming (LP) optimization model
@@ -641,7 +641,7 @@ def main():
       <div class="card">
         <h2>Executive Memorandum</h2>
         <p><strong>To:</strong> Dave Wagner, Production Manager & Executive Committee, Jansen Gas<br>
-        <strong>From:</strong> Senior Business Analytics & Data Science Practice<br>
+        <strong>From:</strong> Gali Venkata Gopi<br>
         <strong>Subject:</strong> Optimal Feedstock Blending Strategy & Strategic Scenario Recommendations (Case 4.1)</p>
         
         <div class="callout">

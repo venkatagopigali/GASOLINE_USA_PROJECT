@@ -196,10 +196,6 @@ export default function App() {
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/20">
                 Case 4.1
               </span>
-              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Vercel Ready
-              </span>
             </div>
             <p className="text-xs text-slate-400">Aviation Gasoline Blending Optimization Engine</p>
           </div>
@@ -606,7 +602,7 @@ export default function App() {
                   {/* Memorandum Metadata */}
                   <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1 font-mono">
                     <div><strong className="text-white font-sans">TO:</strong> Dave Wagner, Production Manager & Executive Leadership, Jansen Gas</div>
-                    <div><strong className="text-white font-sans">FROM:</strong> Antigravity Senior Data Science & Business Analytics Practice</div>
+                    <div><strong className="text-white font-sans">FROM:</strong> Gali Venkata Gopi</div>
                     <div><strong className="text-white font-sans">DATE:</strong> October 2026</div>
                     <div><strong className="text-white font-sans">SUBJECT:</strong> Optimal Feedstock Blending Strategy, Bottleneck Analysis, & Policy Evaluation</div>
                   </div>
