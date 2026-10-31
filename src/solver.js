@@ -13,7 +13,7 @@ export const INITIAL_GASOLINES = {
   'C': { req: 120, price: 4.00, max_rvp: 7.0, min_oct: 100.0, tel: 'High' }
 };
 
-export function solveBlendingModel(params) {
+export function solveBlendingModel(params = {}, calcShadowPrices = true) {
   const {
     feedstocks = INITIAL_FEEDSTOCKS,
     gasolines = INITIAL_GASOLINES,
@@ -160,30 +160,30 @@ export function solveBlendingModel(params) {
   const leftoverRevenue = feedstockNames.reduce((acc, f) => acc + (leftover[f] * feedstocks[f].value * 1000), 0);
   const totalRevenue = gasRevenue + leftoverRevenue;
 
-  // Approximate shadow prices via small perturbation
+  // Calculate shadow prices via finite difference without infinite recursion
   const shadowPrices = {};
-  for (const f of feedstockNames) {
-    // If leftover > 0.01, shadow price is exactly its market residual value
-    if (leftover[f] > 0.05) {
-      shadowPrices[f] = feedstocks[f].value;
-    } else {
-      // Perturb supply by +1k gal and solve
-      const perturbedFeedstocks = {
-        ...feedstocks,
-        [f]: { ...feedstocks[f], avail: feedstocks[f].avail + 1.0 }
-      };
-      const pRes = solveBlendingModel({
-        feedstocks: perturbedFeedstocks,
-        gasolines,
-        sideConstraint,
-        bTel,
-        rvpLimit,
-        aMinOct
-      });
-      if (pRes.feasible) {
-        shadowPrices[f] = (pRes.revenue - totalRevenue) / 1000.0;
-      } else {
+  if (calcShadowPrices) {
+    for (const f of feedstockNames) {
+      if (leftover[f] > 0.05) {
         shadowPrices[f] = feedstocks[f].value;
+      } else {
+        const perturbedFeedstocks = {
+          ...feedstocks,
+          [f]: { ...feedstocks[f], avail: feedstocks[f].avail + 1.0 }
+        };
+        const pRes = solveBlendingModel({
+          feedstocks: perturbedFeedstocks,
+          gasolines,
+          sideConstraint,
+          bTel,
+          rvpLimit,
+          aMinOct
+        }, false); // Pass false to prevent infinite recursion
+        if (pRes.feasible) {
+          shadowPrices[f] = (pRes.revenue - totalRevenue) / 1000.0;
+        } else {
+          shadowPrices[f] = feedstocks[f].value;
+        }
       }
     }
   }
