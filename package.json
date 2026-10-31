@@ -1,0 +1,26 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "Jansen Gas manufactures three premium aviation gasoline (avgas) blends—**Gas A**, **Gas B**, and **Gas C**—by blending four raw refinery feedstocks: 1. **Alkylate** 2. **Catalytic Cracked Gasoline (CCG)** 3. **Straight Run Gasoline (SRG)** 4. **Isopentane**",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "javascript-lp-solver": "^1.0.3",
+    "lucide-react": "^1.66.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "recharts": "^3.10.1",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.5"
+  }
+}
