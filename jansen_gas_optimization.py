@@ -489,7 +489,389 @@ def main():
     plt.close()
 
     print(f"[+] Successfully saved charts to: {OUTPUT_DIR}")
+
+    # ---------------------------------------------------------
+    # PART 4: GENERATE STANDALONE EXECUTIVE HTML REPORT & MODEL
+    # ---------------------------------------------------------
+    print("\n[+] Generating self-contained Executive Business Report & Model (HTML)...")
+    import base64
+    import webbrowser
+
+    def encode_image(img_path):
+        if os.path.exists(img_path):
+            with open(img_path, 'rb') as f:
+                return base64.b64encode(f.read()).decode('utf-8')
+        return ""
+
+    chart1_b64 = encode_image(chart1_path)
+    chart2_b64 = encode_image(chart2_path)
+    chart3_b64 = encode_image(chart3_path)
+
+    html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jansen Gas | Executive Business Report & Optimization Model</title>
+  <style>
+    :root {{
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --bg: #0b1120;
+      --card-bg: #111827;
+      --card-border: #1f2937;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }}
+    * {{ box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }}
+    body {{ background-color: var(--bg); color: var(--text); line-height: 1.6; padding: 30px 20px; }}
+    .container {{ max-width: 1200px; margin: 0 auto; }}
+    
+    /* Header */
+    .header {{ display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card-border); padding-bottom: 20px; margin-bottom: 25px; }}
+    .logo-group {{ display: flex; align-items: center; gap: 15px; }}
+    .logo-badge {{ width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #0284c7, #4f46e5); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; color: white; }}
+    .title-group h1 {{ font-size: 24px; color: white; font-weight: 800; }}
+    .title-group p {{ font-size: 13px; color: var(--text-muted); }}
+    .btn-print {{ background: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; transition: 0.2s; }}
+    .btn-print:hover {{ background: var(--primary-dark); }}
+
+    /* Navigation Tabs */
+    .tabs {{ display: flex; gap: 10px; margin-bottom: 25px; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }}
+    .tab-btn {{ background: none; border: none; color: var(--text-muted); padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 8px; transition: 0.2s; }}
+    .tab-btn.active {{ background: #1e293b; color: #38bdf8; }}
+    .tab-btn:hover:not(.active) {{ color: white; }}
+
+    /* KPI Grid */
+    .kpi-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 30px; }}
+    .kpi-card {{ background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 20px; }}
+    .kpi-label {{ font-size: 12px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }}
+    .kpi-value {{ font-size: 28px; font-weight: 800; color: white; font-family: monospace; }}
+    .kpi-sub {{ font-size: 12px; color: var(--success); margin-top: 6px; font-weight: 500; }}
+
+    /* Section Cards */
+    .card {{ background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 25px; margin-bottom: 25px; }}
+    .card h2 {{ font-size: 18px; font-weight: 700; color: white; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }}
+    .card h3 {{ font-size: 15px; font-weight: 600; color: #38bdf8; margin: 15px 0 8px; }}
+    p {{ color: #d1d5db; font-size: 14px; margin-bottom: 12px; }}
+
+    /* Tables */
+    table {{ width: 100%; border-collapse: collapse; font-size: 13px; margin: 15px 0; }}
+    th, td {{ padding: 12px 14px; text-align: left; border-bottom: 1px solid #1f2937; }}
+    th {{ background: #1a2234; color: #94a3b8; text-transform: uppercase; font-size: 11px; font-weight: 700; }}
+    tr:hover {{ background: rgba(255, 255, 255, 0.02); }}
+    .text-right {{ text-align: right; }}
+    .font-mono {{ font-family: monospace; }}
+    .badge {{ display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }}
+    .badge-success {{ background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }}
+    .badge-warning {{ background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }}
+    .badge-danger {{ background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }}
+
+    /* Math Box */
+    .math-box {{ background: #070d17; border: 1px solid #1e293b; border-radius: 10px; padding: 16px; font-family: monospace; font-size: 13px; color: #e2e8f0; margin: 15px 0; }}
+    .math-line {{ margin-bottom: 8px; }}
+    .math-title {{ color: #38bdf8; font-weight: bold; margin-bottom: 4px; }}
+
+    /* Charts */
+    .chart-container {{ text-align: center; margin: 20px 0; }}
+    .chart-container img {{ max-width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--card-border); }}
+
+    /* Grid layout */
+    .grid-2 {{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }}
+    @media (max-width: 768px) {{ .grid-2 {{ grid-template-columns: 1fr; }} }}
+
+    /* Callout */
+    .callout {{ border-left: 4px solid var(--primary); background: #0f172a; padding: 14px 18px; border-radius: 0 10px 10px 0; margin: 15px 0; }}
+    .callout-title {{ font-weight: 700; color: #38bdf8; font-size: 13px; text-transform: uppercase; margin-bottom: 4px; }}
+    .callout-body {{ font-size: 13px; color: #cbd5e1; }}
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-group">
+        <div class="logo-badge">✈</div>
+        <div class="title-group">
+          <h1>JANSEN GAS &bull; EXECUTIVE BUSINESS REPORT & MODEL</h1>
+          <p>Aviation Gasoline Blending Optimization &bullet; Case 4.1 &bullet; Decision Sciences Report</p>
+        </div>
+      </div>
+      <button class="btn-print" onclick="window.print()">🖨 Print / Export PDF</button>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('report')">📑 Executive Business Report</button>
+      <button class="tab-btn" onclick="showTab('model')">⚙️ Optimization Model & Formulations</button>
+      <button class="tab-btn" onclick="showTab('scenarios')">🔬 Strategic Case Scenarios (Q1-Q5)</button>
+      <button class="tab-btn" onclick="showTab('charts')">📊 Analytical Visualizations</button>
+    </div>
+
+    <!-- KPI Summary Row -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Optimal Total Revenue</div>
+        <div class="kpi-value">${base_res['revenue']:,.2f}</div>
+        <div class="kpi-sub">85.3% Gas Sales + 14.7% Salvage</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Finished Gas Revenue</div>
+        <div class="kpi-value">${total_gas_rev:,.2f}</div>
+        <div class="kpi-sub">Gas A: $390k | Gas B: $455k | Gas C: $620k</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Alkylate Shadow Price</div>
+        <div class="kpi-value">$5.77 / gal</div>
+        <div class="kpi-sub">+$1.27/gal over book value ($4.50)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Cost of Side Constraint (A ≥ B)</div>
+        <div class="kpi-value">${cost_of_constraint:,.2f}</div>
+        <div class="kpi-sub">Gained if policy constraint is lifted</div>
+      </div>
+    </div>
+
+    <!-- TAB 1: EXECUTIVE BUSINESS REPORT -->
+    <div id="tab-report" class="tab-content">
+      <div class="card">
+        <h2>Executive Memorandum</h2>
+        <p><strong>To:</strong> Dave Wagner, Production Manager & Executive Committee, Jansen Gas<br>
+        <strong>From:</strong> Senior Business Analytics & Data Science Practice<br>
+        <strong>Subject:</strong> Optimal Feedstock Blending Strategy & Strategic Scenario Recommendations (Case 4.1)</p>
+        
+        <div class="callout">
+          <div class="callout-title">Key Executive Takeaway</div>
+          <div class="callout-body">
+            By optimizing raw feedstock blending using Linear Programming, Jansen Gas achieves a maximized total gross revenue of <strong>${base_res['revenue']:,.2f}</strong>. Alkylate is our primary operational bottleneck (100% utilized, shadow price of <strong>$5.77/gal</strong>). Relaxing the company policy requiring Gas A ≥ Gas B unlocks an immediate <strong>+$6,988.41</strong> in pure net profit.
+          </div>
+        </div>
+
+        <h3>1. Baseline Blending & Production Matrix</h3>
+        <p>The table below presents the mathematically optimal recipe (in thousands of gallons) across all four feedstocks and finished aviation gasolines:</p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Feedstock</th>
+              <th class="text-right">Gas A ($3.00)</th>
+              <th class="text-right">Gas B ($3.50)</th>
+              <th class="text-right">Gas C ($4.00)</th>
+              <th class="text-right">Leftover Sold</th>
+              <th class="text-right">Total Avail</th>
+              <th class="text-right">Unit Value</th>
+              <th class="text-right">Utilization</th>
+            </tr>
+          </thead>
+          <tbody class="font-mono">
+            <tr>
+              <td>Alkylate</td>
+              <td class="text-right">{base_res['blend'][('Alkylate', 'A')]:.2f}</td>
+              <td class="text-right">{base_res['blend'][('Alkylate', 'B')]:.2f}</td>
+              <td class="text-right">{base_res['blend'][('Alkylate', 'C')]:.2f}</td>
+              <td class="text-right">0.00</td>
+              <td class="text-right">140.00</td>
+              <td class="text-right">$4.50</td>
+              <td class="text-right"><span class="badge badge-success">100.0%</span></td>
+            </tr>
+            <tr>
+              <td>CCG</td>
+              <td class="text-right">{base_res['blend'][('CCG', 'A')]:.2f}</td>
+              <td class="text-right">0.00</td>
+              <td class="text-right">0.00</td>
+              <td class="text-right">{base_res['leftover']['CCG']:.2f}</td>
+              <td class="text-right">130.00</td>
+              <td class="text-right">$2.50</td>
+              <td class="text-right"><span class="badge badge-warning">67.6%</span></td>
+            </tr>
+            <tr>
+              <td>SRG</td>
+              <td class="text-right">{base_res['blend'][('SRG', 'A')]:.2f}</td>
+              <td class="text-right">{base_res['blend'][('SRG', 'B')]:.2f}</td>
+              <td class="text-right">{base_res['blend'][('SRG', 'C')]:.2f}</td>
+              <td class="text-right">0.00</td>
+              <td class="text-right">140.00</td>
+              <td class="text-right">$2.25</td>
+              <td class="text-right"><span class="badge badge-success">100.0%</span></td>
+            </tr>
+            <tr>
+              <td>Isopentane</td>
+              <td class="text-right">{base_res['blend'][('Isopentane', 'A')]:.2f}</td>
+              <td class="text-right">{base_res['blend'][('Isopentane', 'B')]:.2f}</td>
+              <td class="text-right">{base_res['blend'][('Isopentane', 'C')]:.2f}</td>
+              <td class="text-right">{base_res['leftover']['Isopentane']:.2f}</td>
+              <td class="text-right">110.00</td>
+              <td class="text-right">$2.35</td>
+              <td class="text-right"><span class="badge badge-warning">42.8%</span></td>
+            </tr>
+            <tr style="border-top: 2px solid #334155; font-weight: bold; color: white;">
+              <td>Total Produced (k gal)</td>
+              <td class="text-right">{base_res['production']['A']:.2f}</td>
+              <td class="text-right">{base_res['production']['B']:.2f}</td>
+              <td class="text-right">{base_res['production']['C']:.2f}</td>
+              <td class="text-right">{sum(base_res['leftover'].values()):.2f}</td>
+              <td class="text-right">520.00</td>
+              <td class="text-right">—</td>
+              <td class="text-right"><span class="badge badge-success">79.8%</span></td>
+            </tr>
+            <tr style="color: #94a3b8; font-size: 11px;">
+              <td>Contract Demand (k gal)</td>
+              <td class="text-right">120.00</td>
+              <td class="text-right">130.00</td>
+              <td class="text-right">120.00</td>
+              <td colspan="4" style="text-align: right; font-style: italic;">Gas C produced up to maximum feasible profit</td>
+            </tr>
+            <tr style="color: #38bdf8; font-size: 11px;">
+              <td>Realized RVP (Max 7.0)</td>
+              <td class="text-right">7.00 psi</td>
+              <td class="text-right">7.00 psi</td>
+              <td class="text-right">7.00 psi</td>
+              <td colspan="4" style="text-align: right;">100% Binding Volatility Limit</td>
+            </tr>
+            <tr style="color: #a855f7; font-size: 11px;">
+              <td>Realized Octane</td>
+              <td class="text-right">90.00 (min 90)</td>
+              <td class="text-right">97.00 (min 97)</td>
+              <td class="text-right">100.00 (min 100)</td>
+              <td colspan="4" style="text-align: right;">100% Binding Octane Specifications</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>2. Strategic Business Recommendations for Dave Wagner</h3>
+        <ol style="margin-left: 20px; color: #cbd5e1; font-size: 14px; line-height: 1.8;">
+          <li><strong>Eliminate Policy Constraint (Gas A ≥ Gas B):</strong> Dave should advocate to lift this internal rule. Removing it increases revenue by <strong>+$6,988.41</strong> by shifting production away from \$3.00 Gas A to high-margin \$3.50 Gas B (194.69k gal).</li>
+          <li><strong>Aggressively Procure Additional Alkylate:</strong> Alkylate is fully exhausted and has an internal marginal worth (shadow price) of <strong>$5.77/gal</strong> compared to its purchase value of $4.50. Jansen Gas should purchase additional Alkylate supplies at any market spot price below $5.50/gal.</li>
+          <li><strong>Reject Medium TEL for Gas B:</strong> Shifting Gas B to Medium TEL is mathematically and chemically <strong>infeasible</strong> due to simultaneous vapor pressure limits and Gas C octane requirements. Continue using High TEL.</li>
+          <li><strong>Monitor RVP Environmental Regulations:</strong> If government regulations tighten maximum allowable RVP below 6.43 psi, current operations become infeasible. Each 0.1 psi reduction costs ~$10,000 in revenue.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- TAB 2: OPTIMIZATION MODEL FORMULATION -->
+    <div id="tab-model" class="tab-content" style="display: none;">
+      <div class="card">
+        <h2>Mathematical Model Formulation (Linear Programming)</h2>
+        <p>The blending problem is modeled as a continuous Linear Program with 16 decision variables and 12 constraints.</p>
+
+        <div class="math-box">
+          <div class="math-title">1. Sets & Indices:</div>
+          <div class="math-line">i &isin; Feedstocks = &#123; Alkylate, CCG, SRG, Isopentane &#125;</div>
+          <div class="math-line">j &isin; Gasolines = &#123; Gas A, Gas B, Gas C &#125;</div>
+          
+          <div class="math-title" style="margin-top: 15px;">2. Decision Variables:</div>
+          <div class="math-line">x<sub>ij</sub> &ge; 0 : Thousands of gallons of feedstock i used to blend gasoline j</div>
+          <div class="math-line">s<sub>i</sub> &ge; 0  : Thousands of gallons of unblended leftover feedstock i sold at residual market value</div>
+          
+          <div class="math-title" style="margin-top: 15px;">3. Objective Function (Maximize Total Gross Revenue):</div>
+          <div class="math-line">max Z = &sum;<sub>j</sub> p<sub>j</sub> (&sum;<sub>i</sub> x<sub>ij</sub>) + &sum;<sub>i</sub> v<sub>i</sub> s<sub>i</sub></div>
+          <div class="math-line" style="color: #94a3b8;">Where p<sub>A</sub> = $3.00, p<sub>B</sub> = $3.50, p<sub>C</sub> = $4.00; v = [ $4.50, $2.50, $2.25, $2.35 ]</div>
+
+          <div class="math-title" style="margin-top: 15px;">4. Constraints:</div>
+          <div class="math-line">&bull; <strong>Feedstock Supply Balance:</strong> &sum;<sub>j</sub> x<sub>ij</sub> + s<sub>i</sub> = Supply<sub>i</sub>, &forall; i &isin; Feedstocks</div>
+          <div class="math-line">&bull; <strong>Contractual Minimum Demand:</strong> &sum;<sub>i</sub> x<sub>ij</sub> &ge; Demand<sub>j</sub>, &forall; j &isin; &#123;A, B, C&#125;</div>
+          <div class="math-line">&bull; <strong>Max Reid Vapor Pressure (RVP &le; 7.0 psi):</strong> &sum;<sub>i</sub> (RVP<sub>i</sub> - 7.0) x<sub>ij</sub> &le; 0, &forall; j</div>
+          <div class="math-line">&bull; <strong>Min Octane Rating:</strong></div>
+          <div class="math-line">&nbsp;&nbsp;&nbsp;&bull; Gas A (Low TEL): &sum;<sub>i</sub> (OctaneLow<sub>i</sub> - 90) x<sub>iA</sub> &ge; 0</div>
+          <div class="math-line">&nbsp;&nbsp;&nbsp;&bull; Gas B (High TEL): &sum;<sub>i</sub> (OctaneHigh<sub>i</sub> - 97) x<sub>iB</sub> &ge; 0</div>
+          <div class="math-line">&nbsp;&nbsp;&nbsp;&bull; Gas C (High TEL): &sum;<sub>i</sub> (OctaneHigh<sub>i</sub> - 100) x<sub>iC</sub> &ge; 0</div>
+          <div class="math-line">&bull; <strong>Company Policy Side Constraint:</strong> &sum;<sub>i</sub> x<sub>iA</sub> &ge; &sum;<sub>i</sub> x<sub>iB</sub> (Gas A &ge; Gas B)</div>
+        </div>
+
+        <h3>PuLP Python Implementation Verification</h3>
+        <p>The model was solved using Python's <code>pulp</code> package with the CBC simplex solver, yielding status: <span class="badge badge-success">Optimal</span> and exact objective value: <strong>$1,718,021.80</strong>.</p>
+      </div>
+    </div>
+
+    <!-- TAB 3: SCENARIOS (Q1 - Q5) -->
+    <div id="tab-scenarios" class="tab-content" style="display: none;">
+      <div class="card">
+        <h2>Strategic Scenario Evaluations (Case Questions 1 to 5)</h2>
+        
+        <div style="margin-bottom: 25px;">
+          <h3>Question 1: Economic Cost of the Side Constraint (Gas A &ge; Gas B)</h3>
+          <p><strong>Finding:</strong> Enforcing Gas A &ge; Gas B costs Jansen Gas <strong>$6,988.41</strong>. Removing this constraint raises revenue from $1,718,021.80 to <strong>$1,725,010.21</strong>.</p>
+          <p>Production shifts: Gas A drops from 130k to its contract floor of 120k gal, while high-margin Gas B surges from 130k to <strong>194.69k gal</strong>.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+          <h3>Question 2: Technical Viability of Medium TEL for Gas B</h3>
+          <p><strong>Finding:</strong> <span class="badge badge-danger">Strictly Infeasible</span></p>
+          <p>Under Medium TEL, achieving 97 octane requires massive amounts of Alkylate and Isopentane. However, Isopentane's RVP of 20 breaches the 7.0 psi vapor pressure cap, and Alkylate is simultaneously needed by Gas C (100 octane). The specifications cannot be co-satisfied.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+          <h3>Question 3: Stricter Reid Vapor Pressure Standards</h3>
+          <p><strong>Finding:</strong> The maximum allowable RVP can be lowered from 7.0 psi down to <strong>6.43 psi</strong> before blending becomes impossible. Each 0.1 psi reduction costs ~$10,000 in lost revenue as Isopentane is forced into low-value salvage.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+          <h3>Question 4: Gas A Maximum Feasible Octane Frontier</h3>
+          <p><strong>Finding:</strong> Gas A's minimum octane requirement can be raised from 90.0 up to <strong>91.80</strong>. Beyond 91.80, the model becomes infeasible. Raising octane to 91.0 reduces revenue by -$28,950 because Alkylate is diverted away from $4.00 Gas C.</p>
+        </div>
+
+        <div style="margin-bottom: 25px;">
+          <h3>Question 5: Proportional Price and Cost Invariance</h3>
+          <p><strong>Finding:</strong> <span class="badge badge-success">Dave Wagner is 100% Correct</span></p>
+          <p>If all gas prices and feedstock residual values scale uniformly by +10% (or shift by a constant +$1/gal), the optimal blending decision variables remain <strong>100.0% identical</strong>. Blending decisions depend purely on relative economic tradeoffs.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: CHARTS -->
+    <div id="tab-charts" class="tab-content" style="display: none;">
+      <div class="card">
+        <h2>Analytical Visualizations</h2>
+        
+        <h3>1. Feedstock Allocation Across Finished Gasolines & Salvage</h3>
+        <div class="chart-container">
+          <img src="data:image/png;base64,{chart1_b64}" alt="Feedstock Allocation Chart">
+        </div>
+
+        <h3>2. Revenue Sensitivity to Tighter Reid Vapor Pressure Standards</h3>
+        <div class="chart-container">
+          <img src="data:image/png;base64,{chart2_b64}" alt="RVP Sensitivity Chart">
+        </div>
+
+        <h3>3. Feedstock Valuation: Market Value vs Marginal Shadow Price</h3>
+        <div class="chart-container">
+          <img src="data:image/png;base64,{chart3_b64}" alt="Shadow Prices Chart">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showTab(tabId) {{
+      document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabId).style.display = 'block';
+      event.target.classList.add('active');
+    }}
+  </script>
+</body>
+</html>
+"""
+    html_report_path = os.path.join(OUTPUT_DIR, "jansen_gas_business_report.html")
+    with open(html_report_path, "w", encoding="utf-8") as f:
+        f.write(html_content)
+
+    print(f"[+] Business Report & Model generated at: {html_report_path}")
+    
+    # Automatically open report in user's default browser
+    try:
+        webbrowser.open("file://" + os.path.abspath(html_report_path))
+        print("[+] Automatically opened Business Report & Model in your default web browser!")
+    except Exception as e:
+        print(f"[*] Note: Open {html_report_path} in your browser to view the interactive report.")
+
     print("[+] Script execution complete!")
+
 
 if __name__ == '__main__':
     main()

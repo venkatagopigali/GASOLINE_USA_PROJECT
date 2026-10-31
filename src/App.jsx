@@ -19,7 +19,9 @@ import {
   BarChart3,
   HelpCircle,
   FileCode2,
-  ExternalLink
+  ExternalLink,
+  FileText,
+  Printer
 } from 'lucide-react';
 import {
   BarChart,
@@ -35,7 +37,7 @@ import {
 
 export default function App() {
   // State
-  const [activeTab, setActiveTab] = useState('blending'); // 'blending' | 'scenarios' | 'valuation' | 'model'
+  const [activeTab, setActiveTab] = useState('report'); // 'report' | 'blending' | 'scenarios' | 'valuation' | 'model'
   const [sideConstraint, setSideConstraint] = useState(true);
   const [bTel, setBTel] = useState('High');
   const [rvpLimit, setRvpLimit] = useState(7.0);
@@ -519,10 +521,21 @@ export default function App() {
           <div className="lg:col-span-3 space-y-6">
             
             {/* Tab Navigation */}
-            <div className="flex border-b border-slate-800 space-x-2">
+            <div className="flex border-b border-slate-800 space-x-2 overflow-x-auto">
+              <button
+                onClick={() => setActiveTab('report')}
+                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
+                  activeTab === 'report'
+                    ? 'border-sky-500 text-sky-400'
+                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                <FileText className="w-4 h-4" />
+                Executive Business Report
+              </button>
               <button
                 onClick={() => setActiveTab('blending')}
-                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 ${
+                className={`pb-3 px-4 text-sm font-semibold transition border-b-2 flex items-center gap-2 whitespace-nowrap ${
                   activeTab === 'blending'
                     ? 'border-sky-500 text-sky-400'
                     : 'border-transparent text-slate-400 hover:text-slate-200'
@@ -565,6 +578,161 @@ export default function App() {
                 Mathematical Model
               </button>
             </div>
+
+            {/* TAB 0: EXECUTIVE BUSINESS REPORT */}
+            {activeTab === 'report' && (
+              <div className="space-y-6">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+                  {/* Memo Header */}
+                  <div className="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 gap-4">
+                    <div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-sky-400 bg-sky-500/10 px-2.5 py-1 rounded-full border border-sky-500/20">
+                        Formal Business Deliverable
+                      </span>
+                      <h2 className="text-xl font-bold text-white mt-2">Executive Business Report & Decision Memo</h2>
+                      <p className="text-xs text-slate-400 mt-1">
+                        Case 4.1: Blending Aviation Gasoline at Jansen Gas &bull; Production Optimization Review
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => window.print()}
+                      className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 text-xs font-semibold flex items-center gap-2 transition shadow-sm"
+                    >
+                      <Printer className="w-4 h-4 text-sky-400" />
+                      Print / Save PDF
+                    </button>
+                  </div>
+
+                  {/* Memorandum Metadata */}
+                  <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs text-slate-300 space-y-1 font-mono">
+                    <div><strong className="text-white font-sans">TO:</strong> Dave Wagner, Production Manager & Executive Leadership, Jansen Gas</div>
+                    <div><strong className="text-white font-sans">FROM:</strong> Antigravity Senior Data Science & Business Analytics Practice</div>
+                    <div><strong className="text-white font-sans">DATE:</strong> October 2026</div>
+                    <div><strong className="text-white font-sans">SUBJECT:</strong> Optimal Feedstock Blending Strategy, Bottleneck Analysis, & Policy Evaluation</div>
+                  </div>
+
+                  {/* Executive Summary Callout */}
+                  <div className="p-4 rounded-xl bg-sky-950/40 border border-sky-500/30 text-sky-200 space-y-2">
+                    <h3 className="font-bold text-sky-300 text-sm flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-sky-400" />
+                      Executive Summary & Optimal Financial Outcome
+                    </h3>
+                    <p className="text-xs text-sky-200/90 leading-relaxed">
+                      Using Linear Programming optimization, Jansen Gas can achieve a maximized total revenue of <strong>${solution.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong> from finished gasoline sales and residual feedstock liquidations.
+                      All quality constraints (Reid vapor pressure &le; 7.0 psi, minimum Octane ratings) are strictly met. Alkylate is our primary binding bottleneck (100% utilized, shadow price of <strong>$5.77/gal</strong>).
+                    </p>
+                  </div>
+
+                  {/* Revenue Breakdown Cards */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                      <span className="text-xs text-slate-400 uppercase font-semibold">Gasoline Sales</span>
+                      <div className="text-xl font-bold text-white mt-1 font-mono">
+                        ${solution.gasRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                      <span className="text-[11px] text-emerald-400">85.3% of total revenue</span>
+                    </div>
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                      <span className="text-xs text-slate-400 uppercase font-semibold">Feedstock Salvage</span>
+                      <div className="text-xl font-bold text-white mt-1 font-mono">
+                        ${solution.leftoverRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                      <span className="text-[11px] text-indigo-400">14.7% from residual liquidation</span>
+                    </div>
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                      <span className="text-xs text-slate-400 uppercase font-semibold">Total Revenue</span>
+                      <div className="text-xl font-bold text-sky-400 mt-1 font-mono">
+                        ${solution.revenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </div>
+                      <span className="text-[11px] text-slate-400">Maximized Objective</span>
+                    </div>
+                  </div>
+
+                  {/* Strategic Case Questions Answers */}
+                  <div className="space-y-4 pt-2">
+                    <h3 className="text-base font-bold text-white border-b border-slate-800 pb-2">
+                      Strategic Case Questions & Findings (Dave Wagner Inquiries)
+                    </h3>
+
+                    {/* Q1 */}
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                          Question 1: Policy Constraint (Gas A &ge; Gas B)
+                        </span>
+                        <span className="text-xs font-mono font-bold text-amber-400">+$6,988.41 Opportunity Cost</span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        <strong>Finding:</strong> Enforcing the company policy that Gas A produced must be at least as large as Gas B costs the company <strong>$6,988.41</strong> in lost profit.
+                        Removing this constraint allows production of higher-priced Gas B ($3.50/gal) to rise to <strong>194.69k gallons</strong>, increasing total revenue to <strong>$1,725,010.21</strong>.
+                      </p>
+                    </div>
+
+                    {/* Q2 */}
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                          Question 2: Medium TEL for Gas B
+                        </span>
+                        <span className="text-xs font-bold text-rose-400">Strictly Infeasible</span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        <strong>Finding:</strong> Producing Gas B with Medium TEL is <strong>chemically impossible</strong>. Achieving 97 octane requires large fractions of Alkylate and Isopentane; however, Isopentane's RVP of 20 exceeds the 7.0 psi limit, and Alkylate is simultaneously required by Gas C (100 octane). Jansen must keep Gas B on High TEL.
+                      </p>
+                    </div>
+
+                    {/* Q3 */}
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                          Question 3: Tighter Reid Vapor Pressure Standards
+                        </span>
+                        <span className="text-xs font-mono font-bold text-sky-400">Min Feasible RVP: 6.43 psi</span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        <strong>Finding:</strong> Stricter environmental standards can lower maximum RVP from 7.0 down to <strong>6.43 psi</strong> before blending becomes mathematically infeasible. Every 0.1 psi reduction costs approximately <strong>$10,000</strong> in lost revenue.
+                      </p>
+                    </div>
+
+                    {/* Q4 */}
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                          Question 4: Gas A Octane Limits
+                        </span>
+                        <span className="text-xs font-mono font-bold text-purple-400">Max Feasible Octane: 91.80</span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        <strong>Finding:</strong> Dave Wagner's hypothesis that Gas A octane can be raised is feasible up to <strong>91.80</strong> octane. However, raising it diverts Alkylate from Gas C ($4.00/gal), decreasing revenue by $28,950 at 91.0 octane unless customers pay a premium.
+                      </p>
+                    </div>
+
+                    {/* Q5 */}
+                    <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                          Question 5: Market Inflation & Price Scale Invariance
+                        </span>
+                        <span className="text-xs font-bold text-emerald-400">100% Invariant Recipe</span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        <strong>Finding:</strong> Dave is <strong>100% correct</strong>. Proportional (+10%) or uniform additive (+$1/gal) price/value changes do not alter the optimal physical blend recipe because relative property-to-margin tradeoffs remain constant.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Recommendations */}
+                  <div className="border-t border-slate-800 pt-4 space-y-3">
+                    <h3 className="text-base font-bold text-white">Actionable Recommendations for Dave Wagner</h3>
+                    <ul className="text-xs text-slate-300 space-y-2 list-disc pl-5">
+                      <li><strong>Remove Policy Constraint:</strong> Recommend executive approval to eliminate $Gas\ A \ge Gas\ B$, capturing <strong>+$6,988.41</strong> in immediate margin.</li>
+                      <li><strong>Procure Extra Alkylate:</strong> Alkylate has an internal optimization worth of <strong>$5.77/gal</strong> (vs $4.50 book value). Acquire up to 50k additional gallons at any price under $5.50/gal.</li>
+                      <li><strong>Maintain High TEL on Gas B:</strong> Reject Medium TEL suggestions from chemical staff due to severe infeasibility.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* TAB 1: BLENDING PLAN */}
             {activeTab === 'blending' && (
