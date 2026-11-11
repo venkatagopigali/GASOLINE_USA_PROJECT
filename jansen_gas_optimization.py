@@ -651,7 +651,7 @@ def main():
       <div class="card">
         <h2>Executive Memorandum</h2>
         <p><strong>To:</strong> Dave Wagner, Production Manager & Executive Committee, Jansen Gas<br>
-        <strong>From:</strong> Gali Venkata Gopi<br>
+        <strong>From:</strong> Swetha kasturi<br>
         <strong>Subject:</strong> Optimal Feedstock Blending Strategy & Strategic Scenario Recommendations (Case 4.1)</p>
         
         <div class="callout">
