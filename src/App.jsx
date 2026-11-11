@@ -1198,7 +1198,7 @@ export default function App() {
 
       {/* Footer in Warm Cream */}
       <footer className="border-t border-[#E8DAC6] bg-[#FFFEFB] py-4 px-6 text-center text-xs text-[#786C5E] mt-auto font-medium">
-        Jansen Gas Aviation Gasoline Blending Decision Support System &bull; Designed by Swetha Kasturi &bull; 2026
+        Jansen Gas Aviation Gasoline Blending Decision Support System &bull; Designed by Gali Venkata Gopi &bull; 2026
       </footer>
     </div>
   );
