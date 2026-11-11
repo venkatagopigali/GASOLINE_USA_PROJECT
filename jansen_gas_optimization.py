@@ -2,7 +2,7 @@
 Jansen Gas Aviation Gasoline Blending Optimization Model
 =========================================================
 Case 4.1: Blending Aviation Gasoline at Jansen Gas
-Author: Gali Venkata Gopi
+Author: Swetha Kasturi
 Date: October 2026
 
 This script implements an end-to-end Linear Programming (LP) optimization model
