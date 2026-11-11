@@ -624,7 +624,7 @@ export default function App() {
                     <div className="flex items-center gap-1">
                       <strong className="text-[#2C241D] font-sans">FROM :--</strong>
                       <span className="font-bold text-[#EA580C] bg-orange-100/90 px-2 py-0.5 rounded border border-orange-200">
-                        Swetha Kasturi
+                        Gali Venkata Gopi
                       </span>
                     </div>
                     <div><strong className="text-[#2C241D] font-sans">DATE:</strong> October 2026</div>
